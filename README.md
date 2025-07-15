@@ -38,3 +38,66 @@
 - Console Management (login\pass + MFA)
 - CLI, API (access key ID and secreat access key)
 - AWS Security Token Service (STS)
+
+When an app try to access a resource, credentials include:
+- AccessKeyId
+- Expiration
+- SecretAccessKey
+- SessionToken
+
+Temporaary credentials are used with:
+- identity federation
+- delegation
+- cross-account access
+- IAM roles
+
+Access control methods:
+- Role-Based Access Control (RBAC)
+- Attribute-Based Access Control (ABAC)
+
+**RBAC** AWS job function policies. Are designed to closely align to common job functions in the IT industy.
+- Administrator
+- Billing
+- DB administrator
+- Data scientist
+- Developer power user
+- Network administrator
+- sercurity auditor
+- support user
+- Sys. administrator
+- View-only user
+
+
+**ABAC** Key\Value tag is assigned to resources.
+Example:
+
+DBadmins group is allowed to start, strop and reboot DBs in production.
+
+We have a user that has key\value tag as Departemtn\DBAdmins.
+Our resources (Amazon RDS for example) have tags Environment\Production and Environment\Development.
+Then we create an ABAC policy:
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowDBAdminProdActions",
+      "Effect": "Allow",
+      "Action": [
+        "rds:StartDBInstance",
+        "rds:StopDBInstance",
+        "rds:RebootDBInstance"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/Environment": "Production",
+          "aws:PrincipalTag/Department": "DBadmin"
+        }
+      }
+    }
+  ]
+}
+```
+
+
