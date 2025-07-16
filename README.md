@@ -423,6 +423,12 @@ Short polling - returns immediately even if the queue is empty
 
 ## 11. CI\CD Tools
 
+[Manual Part1 -Part5](https://github.com/nealdct/aws-dva-code/blob/main/fargate-blue-green-ci-cd/fargate-ci-cd-instructions.md)
+
+### 155. AWS CodeDeploy
+
+[Deployment Strategies](https://docs.aws.amazon.com/whitepapers/latest/overview-deployment-options/deployment-strategies.html)
+
 [buildspec.yaml example](https://github.com/nealdct/aws-dva-code/blob/main/aws-developer-tools/buildspec.yml)
 
 **CI\CD Workflow**
@@ -454,7 +460,9 @@ CodeDeploy Deploys App to EC2 / Lambda / ECS
 CloudWatch Monitors Logs and Metrics
 
 
-🚀 Main AWS Services Used in CI/CD
+
+
+🚀  Main AWS Services Used in CI/CD
 1. AWS CodeCommit – Source Control
 What it is: A fully managed Git-based repository service.
 
@@ -513,3 +521,12 @@ AWS CodeStar: A unified UI to manage your CI/CD pipeline.
 AWS AppConfig: For feature flag deployments.
 
 Third-Party CI/CD Tools (e.g., GitHub Actions, Jenkins): Can integrate seamlessly with AWS services using webhooks, IAM roles, and APIs.
+
+
+### 156. AWS Fargate Blue\Greed Pipeline
+
+ [See Part4-5 manual](https://github.com/nealdct/aws-dva-code/blob/main/fargate-blue-green-ci-cd/fargate-ci-cd-instructions.md)
+
+
+
+## 158. AWS Apmlify and AppSync
