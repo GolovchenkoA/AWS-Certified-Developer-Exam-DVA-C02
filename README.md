@@ -523,11 +523,20 @@ AWS AppConfig: For feature flag deployments.
 Third-Party CI/CD Tools (e.g., GitHub Actions, Jenkins): Can integrate seamlessly with AWS services using webhooks, IAM roles, and APIs.
 
 
-### 156. AWS Fargate Blue\Greed Pipeline
+### 156. AWS Fargate Blue\Greed Pipeline (Part 4)
 
- [See Part4-5 manual](https://github.com/nealdct/aws-dva-code/blob/main/fargate-blue-green-ci-cd/fargate-ci-cd-instructions.md)
+ [See Part4](https://github.com/nealdct/aws-dva-code/blob/main/fargate-blue-green-ci-cd/fargate-ci-cd-instructions.md)
 
+### 156. AWS Fargate Blue\Greed Pipeline (Part 5)
 
+ [See Part5 manual](https://github.com/nealdct/aws-dva-code/blob/main/fargate-blue-green-ci-cd/fargate-ci-cd-instructions.md)
+
+```
+aws ecr create-repository --repository-name nginx --region us-east-1
+docker tag nginx:latest <ACCOUNT-ID>.dkr.ecr.us-east-1.amazonaws.com/nginx:latest
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <ACCOUNT-ID>.dkr.ecr.us-east-1.amazonaws.com/nginx
+docker push <ACCOUNT-ID>.dkr.ecr.us-east-1.amazonaws.com/nginx:latest
+```
 
 ## 158. AWS Apmlify and AppSync
 [AWS Amplify](https://aws.amazon.com/amplify/) Fully managed service to build full-stack applications.
