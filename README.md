@@ -418,3 +418,98 @@ Long polling - has lower costs. Because in AWS SQS we pay for requests. Thus if 
 `Receive Message Wait Time` parameter - from 0 to 20 seconds.
 
 Short polling - returns immediately even if the queue is empty
+
+
+
+## 11. CI\CD Tools
+
+[buildspec.yaml example](https://github.com/nealdct/aws-dva-code/blob/main/aws-developer-tools/buildspec.yml)
+
+**CI\CD Workflow**
+
+Developer Pushes Code → CodeCommit
+
+      ↓
+      
+CodePipeline Starts
+
+      ↓
+      
+CodeBuild Compiles & Tests
+
+      ↓
+      
+Artifacts Stored in S3
+
+      ↓
+      
+CloudFormation Deploys Infra (optional)
+
+      ↓
+      
+CodeDeploy Deploys App to EC2 / Lambda / ECS
+
+      ↓
+      
+CloudWatch Monitors Logs and Metrics
+
+
+🚀 Main AWS Services Used in CI/CD
+1. AWS CodeCommit – Source Control
+What it is: A fully managed Git-based repository service.
+
+Role in CI/CD: Stores your application source code, configuration files, and scripts. Triggers CI/CD pipelines on code changes.
+
+2. AWS CodeBuild – Build & Test
+What it is: A fully managed build service that compiles source code, runs tests, and produces software packages.
+
+Role in CI/CD: Automates the build process. Can also run unit tests, static code analysis, or security scans.
+
+3. AWS CodePipeline – Orchestration
+What it is: A fully managed CI/CD service to orchestrate the end-to-end workflow (source → build → test → deploy).
+
+Role in CI/CD: Connects all stages of your pipeline. Automatically triggers steps when changes are detected (e.g., in CodeCommit or S3).
+
+4. AWS CodeDeploy – Deployment Automation
+What it is: A service that automates application deployment to Amazon EC2, Lambda, on-premises servers, or ECS.
+
+Role in CI/CD: Manages versioned and safe deployments using strategies like blue/green, canary, or in-place deployments.
+
+5. Amazon S3 – Artifact Storage
+What it is: A highly durable object storage service.
+
+Role in CI/CD: Stores build artifacts, configuration files, or deployment packages between pipeline stages.
+
+6. AWS CloudFormation – Infrastructure as Code
+What it is: A service for modeling and provisioning AWS infrastructure using YAML or JSON templates.
+
+Role in CI/CD: Automates the provisioning of infrastructure as part of your CI/CD pipeline. Used to create/update resources like EC2, Lambda, or VPC.
+
+7. Amazon EC2 / AWS Lambda / Amazon ECS / Amazon EKS – Deployment Targets
+These are runtime environments where your application gets deployed.
+
+EC2: Virtual servers in the cloud.
+
+Lambda: Serverless compute.
+
+ECS/EKS: Container orchestration platforms for Docker and Kubernetes workloads.
+
+8. Amazon CloudWatch – Monitoring & Logging
+What it is: Monitoring service for logs, metrics, and events.
+
+Role in CI/CD: Tracks pipeline performance, application logs, error rates, and metrics after deployment.
+
+9. AWS Secrets Manager / AWS Systems Manager Parameter Store – Secrets Management
+Role in CI/CD: Securely store and retrieve credentials, tokens, and configuration values during builds or deployments.
+
+10. Amazon EventBridge – Event Triggers
+What it is: A serverless event bus.
+
+Role in CI/CD: Triggers CI/CD workflows based on events, such as a new image pushed to Amazon ECR or a change in CodeCommit.
+
+Optional: Other Integrations
+AWS CodeStar: A unified UI to manage your CI/CD pipeline.
+
+AWS AppConfig: For feature flag deployments.
+
+Third-Party CI/CD Tools (e.g., GitHub Actions, Jenkins): Can integrate seamlessly with AWS services using webhooks, IAM roles, and APIs.
