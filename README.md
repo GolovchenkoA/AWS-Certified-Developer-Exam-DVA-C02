@@ -530,3 +530,10 @@ Third-Party CI/CD Tools (e.g., GitHub Actions, Jenkins): Can integrate seamlessl
 
 
 ## 158. AWS Apmlify and AppSync
+[AWS Amplify](https://aws.amazon.com/amplify/) Fully managed service to build full-stack applications.
+
+AWS Amplify is a comprehensive development platform from Amazon Web Services (AWS) designed to simplify the process of building and deploying web and mobile applications. It provides a set of tools and services that enable developers to create full-stack applications with ease, without requiring extensive cloud expertise
+
+[AWS AppSync](https://aws.amazon.com/appsync/) AWS AppSync is a service that lets you create and manage GraphQL APIs for web and mobile apps. It offers features such as data caching, API federation, real-time events, custom domains...
+
+
