@@ -23,6 +23,9 @@
 -  Budgets. create a monthly budget
 - Cost Explorer
 
+## Section 3. Command Line Interfica (CLI)
+
+
 ## 9 AWS IAM
 
 - Identity-based policy and Resoure-base policy
@@ -349,3 +352,22 @@ The policy says that Principal: CloudFront is allowed to GetObjects from S3 when
         ]
       }
 ```
+
+- Distribution -> Behaviors -> Create (additional) behavior. Path pattern: /*.jpg and Bucket: my jpeg bucket
+- The same for the pdf bucket
+
+Followeing the created rules requests will be forwarded to the corresponding buckets using the path patterns
+<img width="440" height="274" alt="image" src="https://github.com/user-attachments/assets/1688dd17-cfff-4081-9f15-a6309282d72c" />
+
+To open the site go to the disctribution and cope its "domain name' (available on the distributions page
+⚠️ When you finish -> Disable the distribution, waith a little bit and delete it!!!
+
+
+## Amazone Route 53 DNS
+- Domain registration (.com , .org)
+- Hosted zones (example.com , example2.com - it's a set of records that belong to the domain)
+- Health Check for Ec2 Instances
+- Traffic Flow
+
+[Route 53 Developer Guide](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html)
+📝 For additional information see the Slides
