@@ -37,6 +37,18 @@
 - Authentication: AWS IAM, CLI, API
 - The root user has Full unrestricted permissions. IAM Users are restricted by IAM Policies (by default everything is restricted)
 
+
+⚖️ Groups vs Roles
+
+| Feature       | Group                       | Role                                      |
+| ------------- | --------------------------- | ----------------------------------------- |
+| Type          | IAM entity (for users)      | IAM entity (assumed by users/services)    |
+| Use case      | Assign permissions to users | Temporary permissions for access          |
+| Assumable by  | IAM Users                   | IAM Users, Services, Federated Identities |
+| Persistency   | Persistent permissions      | Temporary permissions                     |
+| Identity tied | Yes (to users)              | No (standalone, assumed as needed)        |
+
+
 ## Authentication
 - Console Management (login\pass + MFA)
 - CLI, API (access key ID and secreat access key)
