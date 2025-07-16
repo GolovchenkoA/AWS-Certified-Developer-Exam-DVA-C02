@@ -107,6 +107,12 @@ Then we create an ABAC policy:
 }
 ```
 
+## 15. Swithing IAM Roles
+It might be useful if we need to do critical operations time to time and should have the permission all the time by default. 
+
+[Methods to assume a role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage-assume.html)
+
+[Grant a user permissions to switch roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html)
 
 # Section 5. Amazon S3 and Cloud Front
 
@@ -282,3 +288,64 @@ OAI works only for S3. When it's configured (Policy applied to an 'origin' bucke
 
 [OAC Origin Access Control](https://aws.amazon.com/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/)
 OAC is an improvement version of OAI with additional use cases.
+
+
+## 58. CloudFront Cache and Behavior Settings
+
+[Amazon CloudFront Cache and Behavior Settings](https://github.com/nealdct/aws-dva-code/blob/main/amazon-cloudfront/cloudfront-cache-and-behavior.md)
+
+CloudShell -> us-east-1 -> 
+```
+aws s3 mb s3://art-statitc-website-12345
+aws s3 mb s3://art-pdf-bucket-12345
+aws s3 mb s3://art-jpg-bucket-12345
+```
+
+Apply bucket policy to `your_bucket_name`
+
+```
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "Statement1",
+			"Principal": "*",
+			"Effect": "Allow",
+			"Action": [
+				"s3:GetObject"
+			],
+			"Resource": "arn:aws:s3:::your_bucket_name/*"
+		}
+	]
+}
+```
+
+
+- Create a CloudFront distribution. 
+- Add origins for all 3 buckets (main, jpeg, pdf). Where `main` is public and `jpeg` and `pdf` use OAC.
+- When jpeg/pdf distribution is created -> copy the generated bucket policy and apply it to the corresponding bucket.
+
+Generated policy example:
+The policy says that Principal: CloudFront is allowed to GetObjects from S3 when  source ARN is equal to the destibution
+```
+{
+        "Version": "2008-10-17",
+        "Id": "PolicyForCloudFrontPrivateContent",
+        "Statement": [
+            {
+                "Sid": "AllowCloudFrontServicePrincipal",
+                "Effect": "Allow",
+                "Principal": {
+                    "Service": "cloudfront.amazonaws.com"
+                },
+                "Action": "s3:GetObject",
+                "Resource": "arn:aws:s3:::your_bucket_name_here/*",
+                "Condition": {
+                    "StringEquals": {
+                      "AWS:SourceArn": "arn:aws:cloudfront::123456789:distribution/GENERATED_DISTRIBUTiON_CODE"
+                    }
+                }
+            }
+        ]
+      }
+```
