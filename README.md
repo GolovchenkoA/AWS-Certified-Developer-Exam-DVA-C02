@@ -37,6 +37,7 @@
 - Authentication: AWS IAM, CLI, API
 - The root user has Full unrestricted permissions. IAM Users are restricted by IAM Policies (by default everything is restricted)
 
+Both Groups and Roles requires applied Policeis
 
 ⚖️ Groups vs Roles
 
@@ -152,7 +153,6 @@ CRR and SRR can be done not only within a single account, but also between 2 dif
 - Expiration actions - Define when objects expire (deleted by s3)
 
  ⚠️  The sliedes have a schema how files can and cannot migrate between the storage classes.
-
 
 ## 47. Configure Replication and LIfecycle
 
@@ -375,7 +375,7 @@ To open the site go to the disctribution and cope its "domain name' (available o
 ⚠️ When you finish -> Disable the distribution, waith a little bit and delete it!!!
 
 
-## Amazone Route 53 DNS
+## 59. Amazone Route 53 DNS
 - Domain registration (.com , .org)
 - Hosted zones (example.com , example2.com - it's a set of records that belong to the domain)
 - Health Check for Ec2 Instances
@@ -383,3 +383,38 @@ To open the site go to the disctribution and cope its "domain name' (available o
 
 [Route 53 Developer Guide](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html)
 📝 For additional information see the Slides
+
+
+
+## 60 S3 Examp Q&A
+⚠️⚠️⚠️ See the slides
+
+[SQS Standard queus](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues.html) vs [FIFO queus](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fifo-queues.html
+
+### FIFO 
+
+- Supports up to 300 msg/sec or up to 3000 for a batch and multiple Groups 
+- De-duplication interval is 5 minutes
+- Order is guarantee in scope of the same Group ID
+- requires `Message Group ID` and `Message Deduplication ID`
+
+### Dead Letter Queue
+- Is just a standard or FIFO queue specified as a dead-letter queue
+- A message is moved to the queue if ReceiveCount exceeds maxReceiveCount for the original queue. Require to tick the `Use Redrive Policy` checkbox
+- It breadks order of messages in the original FIFO queue
+
+### SQS Delay Queue
+[SQS Delay Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-delay-queues.html)
+
+Delivery delay default: 0 seconds and Max 15 minutes
+Visibility Timeout - time before a message will be visible in the queue again if a consumer picks the message and does not approve it was processed successfuly.
+Default visibility timeout 30 sec. Max: 12 hours
+There is a case when messages can be duplicated if a consumer does not send an approval within visibility period.
+
+
+### Long polling and short polling
+Long polling - has lower costs. Because in AWS SQS we pay for requests. Thus if we connect to a queue and wait for a message - it's chipper then make requests often and get empty responses
+
+`Receive Message Wait Time` parameter - from 0 to 20 seconds.
+
+Short polling - returns immediately even if the queue is empty
