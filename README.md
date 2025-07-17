@@ -74,6 +74,35 @@ Policy example:
 }
 ```
 
+5. [How to setup a role for command line](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.html#switch-role-cli-scenario-prod-env)
+6. Execute a command using the profile
+```
+aws s3 ls --profile=your_profile_name
+```
+
+
+## Section 4 Amazon VPC, EC2 and ELB
+
+📝 For additional information see the Slides
+
+### 22. Amazon VPC, Security Group adn NACLs
+
+[What Is Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html)
+<img width="640" height="393" alt="image" src="https://github.com/user-attachments/assets/7ec95abc-988d-415a-b086-6309f7595fe0" />
+
+- VPC is a logicl area within a Region. It spans the entire AWS Region and might contain multiple subnets
+- There are multiple VPCs within a region are allowed
+- Subnets are exist within AZs, but they can be created within a single AZ as well.
+- `VPC router` takes care about routing within a VPC and outside the VPC
+- `route table` is used to configure `VPC router`
+- `API Gateway` is used to get access to the Internet
+- Each VPC has it's own CIDR block of IPs
+
+
+**VPC Components**
+<img width="1016" height="540" alt="image" src="https://github.com/user-attachments/assets/d90fd925-e486-49b5-991c-f926a40a819c" />
+
+
 
 ## 9 AWS IAM
 
