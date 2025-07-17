@@ -115,7 +115,35 @@ aws s3 ls --profile=your_profile_name
 <img width="1264" height="722" alt="image" src="https://github.com/user-attachments/assets/86097486-26b9-4791-b014-c90d8f1d792d" />
 
 
-### AWS EC3 Intances Overivew
+### AWS EC2 Intances Overivew
+
+[EC2 Instance types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)
+
+ENI - Elastic Network Interface (attached to an EC2 instance)
+- EC2 instances in `public networks` may have a private IP and a public IP (optional)
+- you continue to pay for a provisioned EBS volume even if the EC2 instance it’s attached to is stopped.
+- We pay for EBS voluem size (attached to EC2). If we provisioned 10GB we pay for 10 GB even we use 1 GB
+
+
+3 types of IP addresses:
+- Public IP
+- Private IP
+- Elastic IP (Public Static IP)
+
+
+Network Interfaces:
+- Elastic Network Interface (ENI) - standard. for all instances
+- Elastic Network Adapter (ENA) - when need high bendwidth and low latency (inter instance connection) . NOT for all instances
+- Elastic Fabric Adapter (EFA) - for high performcance computing . for all instances
+
+### EBS Volumes
+[EBS volume types](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html)
+
+🛠️ io1, io2 support multi-attach
+**!!!! find st1, sc1. They are in the course video. See the slides!!!!!**
+<img width="1159" height="491" alt="image" src="https://github.com/user-attachments/assets/2f9216ed-a937-4d8c-84b3-b071b6b84247" />
+<img width="1253" height="690" alt="image" src="https://github.com/user-attachments/assets/6030f940-fbb9-4ef2-9c94-04e107c027be" />
+<img width="1268" height="623" alt="image" src="https://github.com/user-attachments/assets/1c9a0085-dc05-4107-837b-17c7fbe53383" />
 
 
 
