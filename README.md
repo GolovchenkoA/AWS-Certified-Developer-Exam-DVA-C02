@@ -85,22 +85,37 @@ aws s3 ls --profile=your_profile_name
 
 📝 For additional information see the Slides
 
-### 22. Amazon VPC, Security Group adn NACLs
+### 22. Amazon VPC, Security Group adn NACLs (Network ACLs)
 
 [What Is Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html)
 <img width="640" height="393" alt="image" src="https://github.com/user-attachments/assets/7ec95abc-988d-415a-b086-6309f7595fe0" />
 
-- VPC is a logicl area within a Region. It spans the entire AWS Region and might contain multiple subnets
+- VPC is a logicl area within a Region. By default each VPC is isolated from other VPCs. It spans the entire AWS Region and might contain multiple subnets
 - There are multiple VPCs within a region are allowed
 - Subnets are exist within AZs, but they can be created within a single AZ as well.
 - `VPC router` takes care about routing within a VPC and outside the VPC
 - `route table` is used to configure `VPC router`
 - `API Gateway` is used to get access to the Internet
 - Each VPC has it's own CIDR block of IPs
+- By default 5 VPCs are allowed wintin a region, but it can be extended
+- By default a VPC is created within a region with subnets in each AZ
 
 
-**VPC Components**
+#### **VPC Components**
 <img width="1016" height="540" alt="image" src="https://github.com/user-attachments/assets/d90fd925-e486-49b5-991c-f926a40a819c" />
+
+
+**Security Groups and NALs**
+
+- Security Groups are scoped to a specific VPC within a region.
+- Security Groups only have allow rules. All the rest by default is denied.
+- Security Group is stateful. That means if some traffic is allowed to out then it allows ANY inboud traffic associatied with that connection.
+- Networks ACLs have inbound and outbound rules
+- Each NACL has explicit allow and deny rule
+<img width="1264" height="722" alt="image" src="https://github.com/user-attachments/assets/86097486-26b9-4791-b014-c90d8f1d792d" />
+
+
+### AWS EC3 Intances Overivew
 
 
 
