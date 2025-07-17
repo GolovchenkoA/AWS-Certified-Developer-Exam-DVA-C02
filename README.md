@@ -542,6 +542,11 @@ Long polling - has lower costs. Because in AWS SQS we pay for requests. Thus if 
 Short polling - returns immediately even if the queue is empty
 
 
+## Section 10. Containers on Amazon ECS\EKS
+
+## 133. Amazon Elastic Containers Service (ECS)
+
+
 
 ## 11. CI\CD Tools
 
