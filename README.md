@@ -15,7 +15,7 @@
 
 # Section 2 AWS Accounts and IAM
 
-## 8 AWS Account and Budget
+## 8. AWS Account and Budget
 - Account. Add alias
 - enable MFA
 - Account. Activate AM user and role access to Billing information
@@ -24,6 +24,55 @@
 - Cost Explorer
 
 ## Section 3. Command Line Interfica (CLI)
+
+## 18. Configure credentials for the AWS CLI
+[Configuration and credential file settings in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+
+User -> Permissions -> add permissions
+User -> Security Credentials -> Generate Access Key
+CLI  -> use the generated access key id and secret access key
+```
+$ aws configure
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+Default region name [None]: us-west-2
+Default output format [None]: json
+```
+
+check `aws/.config` and `aws/.credentials`  files.
+
+### 19. Overview of using the AWS CLI
+
+```
+aws help
+aws ec2 help
+aws ec2 describe-instances
+
+aws s3 help
+aws s3 cp file.txt s3://your_bucket_here
+aws s3 ls
+```
+
+### 20. Assumig IAM Roles (CLI)
+[Methods to assume a role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage-assume.html)
+[How to assume IAM role from CLI](https://www.youtube.com/watch?v=xmBA6cxZyJU)
+
+1. create a role (by default it can be assumed by everyone user from your account)
+2. add permissions to the role (can be done during the 1st step)
+3. create a user
+4. [Grant permissions to switch roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html). add an inline policy to the user or add user to a group that has the permission to assume a role
+
+Policy example:
+```
+{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Allow",
+    "Action": "sts:AssumeRole",
+    "Resource": "arn:aws:iam::account-id:role/role_name*"
+  }
+}
+```
 
 
 ## 9 AWS IAM
@@ -129,6 +178,7 @@ It might be useful if we need to do critical operations time to time and should 
 [Methods to assume a role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage-assume.html)
 
 [Grant a user permissions to switch roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html)
+
 
 # Section 5. Amazon S3 and Cloud Front
 
