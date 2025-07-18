@@ -288,7 +288,12 @@ Elastic Load Balancing supports the following load balancers ([source doc](https
 - Gateway Load Balancers,
 - Classic Load Balancers.
 
-You can select the type of load balancer that best suits your needs. This guide discusses Application Load Balancers. For more information about the other load balancers, see the User Guide for Network Load Balancers, the User Guide for Gateway Load Balancers, and the User Guide for Classic Load Balancers.
+**Gateway Load Balancer**
+
+• Used in front of virtual appliances such as firewalls, IDS/IPS, and deep packet inspection systems.
+• Operates at Layer 3 – listens for all packets on all ports
+• Forwards traffic to the TG specified in the listener rules
+• Exchanges traffic with appliances using the GENEVE protocol on port 6081
 
 
 ## 9 AWS IAM
