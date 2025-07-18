@@ -380,6 +380,14 @@ And when new EC2 instances are created you can see those events in the Auto Scal
 - The instances will be automatically terminated
 - The target group doesn't cost us anything.
 
+
+### 38. Create ASG and ALB using the AWS CLI
+
+[Full Example](https://github.com/nealdct/aws-dva-code/blob/main/amazon-ec2/create-asg-alb-cli.md)
+[create-auto-scaling-group docs](https://awscli.amazonaws.com/v2/documentation/api/2.1.29/reference/autoscaling/create-auto-scaling-group.html)
+
+⚠️ ⚠️ ⚠️ Do not foreget to remove the created resources
+
 ## 9 AWS IAM
 
 - Identity-based policy and Resoure-base policy
