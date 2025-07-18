@@ -374,7 +374,11 @@ for i in {1..200}; do curl http://your-alb-address.com & done; wait
 After some time you should see an alarm in CloudWatch.
 And when new EC2 instances are created you can see those events in the Auto Scaling Group on "Activity" tab.
 
-
+⚠️ ⚠️ ⚠️ Do not foreget to remove the created resources:
+- The Auto Scaling Group
+- The Load Balancer
+- The instances will be automatically terminated
+- The target group doesn't cost us anything.
 
 ## 9 AWS IAM
 
