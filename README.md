@@ -88,6 +88,8 @@ aws s3 ls --profile=your_profile_name
 ### 22. Amazon VPC, Security Group adn NACLs (Network ACLs)
 
 [What Is Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html)
+[VCP Network Access Control Lists NACLs](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html)
+
 <img width="640" height="393" alt="image" src="https://github.com/user-attachments/assets/7ec95abc-988d-415a-b086-6309f7595fe0" />
 
 - VPC is a logicl area within a Region. By default each VPC is isolated from other VPCs. It spans the entire AWS Region and might contain multiple subnets
@@ -185,6 +187,29 @@ sudo lsblk -e7
 [EFS Storages Classes](https://aws.amazon.com/efs/storage-classes/)
 <img width="918" height="454" alt="image" src="https://github.com/user-attachments/assets/e91ead2d-7480-4f0d-9960-fd8e0aa2140e" />
 
+
+### 29. Amazon EC2 User Data and Metadata
+
+[GitHub examples](https://github.com/nealdct/aws-dva-code/blob/main/amazon-ec2/user-data-metadata.md)
+
+(Instance Metadata Service) IMDSv1 vs IMDSv2 . V2 is newer. It requires a token and it's more secure . [How to get a token for IMDSv2](https://github.com/nealdct/aws-dva-code/blob/main/amazon-ec2/user-data-metadata.md)
+
+[Access instance metadata for an EC2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html)
+```
+curl http://169.254.169.254/latest/meta-data
+
+curl http://169.254.169.254/latest/meta-data/local-ipv4
+curl http://169.254.169.254/latest/meta-data/public-ipv4
+```
+
+**`User Data`** a EC2 field. We can define code there which will be executed when the instance starts (supports Batch and PowerShell as well)
+User data can be up to 16KB before it's encoded to base64. It's encoded by default by AWS Console and CLI
+
+### 31. Access Keys and IAM Roles with EC2
+
+- Access Keys are long live credentials and we should avoid to use it.
+- An Access Key is associated with a user and use permissions assigned with the user
+- We can use a user access key within EC2 when we use CLI, but that's a bad practice and instead it's better to use IAM Role (with a Policy) that's assigned to the EC2 instance
 
 
 ## 9 AWS IAM
