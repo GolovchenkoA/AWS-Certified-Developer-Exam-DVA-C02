@@ -363,8 +363,17 @@ How to simulate workload. Run the command below from CloudShell
 for i in {1..200}; do curl http://your-alb-address.com & done; wait
 ```
 
+
+- After some time you should see an alarm in CloudWatch.
+- And when new EC2 instances are created you can see those events in the Auto Scaling Group on "Activity" tab.
+- And the new instances will be visible in the EC2 console.
+- Calling the load balancer URL will show you pages with different AZs
+<img width="930" height="175" alt="image" src="https://github.com/user-attachments/assets/b136beb0-7eea-489c-8c9a-89cf007901e6" />
+
+
 After some time you should see an alarm in CloudWatch.
 And when new EC2 instances are created you can see those events in the Auto Scaling Group on "Activity" tab.
+
 
 
 ## 9 AWS IAM
