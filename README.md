@@ -292,7 +292,7 @@ Elastic Load Balancing supports the following load balancers ([source doc](https
 
 • Used in front of virtual appliances such as firewalls, IDS/IPS, and deep packet inspection systems.
 • Operates at Layer 3 – listens for all packets on all ports
-• Forwards traffic to the TG specified in the listener rules
+• Forwards traffic to the Target Group (TG) specified in the listener rules
 • Exchanges traffic with appliances using the GENEVE protocol on port 6081
 
 Gateway Load Balancer use cases:
@@ -307,6 +307,67 @@ Gateway Load Balancer use cases:
 • Apply network monitoring and logging for analytics
 
 ### 36. Create an Application Load Balancer
+
+- Create a Target group (dynamic auto scaling)
+- Create an ApplicationLoad Balancer, Link Listener (default on port 80) to the Target group. After creating the ALB configuration is not completed(see next steps)
+- Open the created Target Group (Targets tab is empty)
+- Open the created ALB -> open "Integration tab" -> Load Balancing (Edit) -> Application, Network or Gateway Load Balancer target groups -> choose the created Target Group
+
+Here is a list of objects that should be created for setting up a load-balanced environment for EC2 instances in AWS:
+
+- VPC
+- Subnets (at least two in different Availability Zones)
+- Internet Gateway
+- Route Tables
+- Security Groups
+- Network ACLs (optional)
+- EC2 Launch Template or Launch Configuration
+- Auto Scaling Group
+- Target Group
+- Application Load Balancer (or Network Load Balancer)
+- Listener
+- Listener Rules (if needed)
+- IAM Role (for EC2 instance permissions)
+- Elastic IPs (optional, typically for NLB)
+- CloudWatch Alarms (for Auto Scaling policies)
+- Auto Scaling Policies (optional, for dynamic scaling)
+- Health Check Configuration
+
+
+### 37. Create a Scaling Policy
+[Step and simple scaling policies for Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html)
+
+- Open the created Auto Scaling Group
+- Click "edit" on "[your ASG name] Capacity overview" (4 in our case)
+- Set "max desired capasity"
+- Click "edit" on "Network" and add more AZs (2 in our case)
+
+Now we need to update the Load Balancer and add correspondigs sub-nets for the new AZs
+
+- Open the Load Balancer
+- Open "Network mapping", scroll to "Availability Zones and subnets" and click "edit". Add more subnets
+
+Now we need to create a "Dynamic scaling policy" for the Auto Scaling Group
+- open the ASG, open "Automatic scaling" tab and click "Create dynamic scaling policy"
+- set "Metric type" to "Application Load Balancer request count per target" and set our Target Group as shown on the  screenshot below.
+
+Check CloudWatch
+- Open CloudWatch and check that alams were created (Alarms -> All Alarms)
+
+<img width="776" height="522" alt="image" src="https://github.com/user-attachments/assets/71a845d1-57a5-4853-8e73-0755ded3c174" />
+
+
+How to simulate workload. Run the command below from CloudShell
+```
+
+for i in {1..200}; do curl http://your-alb-address.com & done; wait
+```
+
+- After some time you should see an alarm in CloudWatch.
+- And when new EC2 instances are created you can see those events in the Auto Scaling Group on "Activity" tab.
+- And the new instances will be visible in the EC2 console.
+- Calling the load balancer URL will show you pages with different AZs
+<img width="930" height="175" alt="image" src="https://github.com/user-attachments/assets/b136beb0-7eea-489c-8c9a-89cf007901e6" />
 
 
 
