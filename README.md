@@ -226,7 +226,7 @@ User data can be up to 16KB before it's encoded to base64. It's encoded by defau
 - An Access Key is associated with a user and use permissions assigned with the user
 - We can use a user access key within EC2 when we use CLI, but that's a bad practice and instead it's better to use IAM Role (with a Policy) that's assigned to the EC2 instance
 
-### 33 Amazon EC2 Auto Scaling
+### 33. Amazon EC2 Auto Scaling
 
 [Auto Scaling Groups (ASG)](https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-groups.html)
 [What is EC2 Auto Scaling?](https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html)
@@ -305,6 +305,9 @@ Gateway Load Balancer use cases:
 • Distributed denial of service protection systems (DDoS)
 • Integrate with Auto Scaling groups for elasticity
 • Apply network monitoring and logging for analytics
+
+### 36. Create an Application Load Balancer
+
 
 
 ## 9 AWS IAM
