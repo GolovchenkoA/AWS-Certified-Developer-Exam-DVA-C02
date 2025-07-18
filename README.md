@@ -173,6 +173,8 @@ sudo lsblk -e7
 
 ### 27. Amazon Elastic File System (EFS)
 
+[Working with EFS gihub](https://github.com/nealdct/aws-dva-code/blob/main/amazon-efs/working-with-efs.md)
+
 - EFS supports Linux only. Uses NFS (network file system)
 - EFS can be mount to multiple EC2 instances in multiple AZs
 - EFS instances are mount to `mount points` in the local AZ
