@@ -115,7 +115,7 @@ aws s3 ls --profile=your_profile_name
 <img width="1264" height="722" alt="image" src="https://github.com/user-attachments/assets/86097486-26b9-4791-b014-c90d8f1d792d" />
 
 
-### AWS EC2 Intances Overivew
+### 23. AWS EC2 Overivew
 
 [EC2 Instance types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)
 
@@ -136,7 +136,7 @@ Network Interfaces:
 - Elastic Network Adapter (ENA) - when need high bendwidth and low latency (inter instance connection) . NOT for all instances
 - Elastic Fabric Adapter (EFA) - for high performcance computing . for all instances
 
-### EBS Volumes
+#### EBS Volumes
 [EBS volume types](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html)
 
 🛠️ io1, io2 support multi-attach
@@ -144,6 +144,44 @@ Network Interfaces:
 <img width="1159" height="491" alt="image" src="https://github.com/user-attachments/assets/2f9216ed-a937-4d8c-84b3-b071b6b84247" />
 <img width="1253" height="690" alt="image" src="https://github.com/user-attachments/assets/6030f940-fbb9-4ef2-9c94-04e107c027be" />
 <img width="1268" height="623" alt="image" src="https://github.com/user-attachments/assets/1c9a0085-dc05-4107-837b-17c7fbe53383" />
+
+
+### 24. Create a Custom VPC
+[Creating a custom VPC github example](https://github.com/nealdct/aws-dva-code/blob/main/amazon-vpc/custom-vpc.md)
+
+## 25. Amazon EBS ad Instance Stores
+
+These are 2 types of storages:
+- EBS
+- Instance Storages
+
+- A EBS volume is in the same AZ as an EC2 instance
+- A EBS volume is replicated within an AZ
+- EBS volumes are attached over the network
+- EBS snapshots are sotred on S3 (outside the EBS volume AZ)
+- EBS snapshots can be used to create an EBS volume in a different AZ
+- Instance storages physically attached to the host server where EC2 instances are created
+- Instance storages are ephemeral (deleted when an EC2 instance is shot down or power of the host server is turned off)
+
+### 26. Create And Attach an EBS Volume
+Create And Attach an EBS Volume [step by step manual github](https://github.com/nealdct/aws-dva-code/blob/main/amazon-ebs/amazon-ebs-volumes.md), including creating file system and monting a volume
+
+list non-loop volumes attached to Linux
+```
+sudo lsblk -e7
+```
+
+### 27. Amazon Elastic File System (EFS)
+
+- EFS supports Linux only. Uses NFS (network file system)
+- EFS can be mount to multiple EC2 instances in multiple AZs
+- EFS instances are mount to `mount points` in the local AZ
+- `One zone` file system has one target in a single AZ
+- Write operations of EFS volumes are consistancy stored across multiple AZs
+
+
+[EFS Storages Classes](https://aws.amazon.com/efs/storage-classes/)
+<img width="918" height="454" alt="image" src="https://github.com/user-attachments/assets/e91ead2d-7480-4f0d-9960-fd8e0aa2140e" />
 
 
 
