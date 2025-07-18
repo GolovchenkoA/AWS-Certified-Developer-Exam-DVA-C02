@@ -295,6 +295,17 @@ Elastic Load Balancing supports the following load balancers ([source doc](https
 • Forwards traffic to the TG specified in the listener rules
 • Exchanges traffic with appliances using the GENEVE protocol on port 6081
 
+Gateway Load Balancer use cases:
+
+• Load balance virtual appliances such as:
+• Intrusion detection systems (IDS)
+• Intrusion prevention systems (IPS)
+• Next generation firewalls (NGFW)
+• Web application firewalls (WAF)
+• Distributed denial of service protection systems (DDoS)
+• Integrate with Auto Scaling groups for elasticity
+• Apply network monitoring and logging for analytics
+
 
 ## 9 AWS IAM
 
