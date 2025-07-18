@@ -53,6 +53,16 @@ aws s3 cp file.txt s3://your_bucket_here
 aws s3 ls
 ```
 
+### AWS S3API
+The aws `s3api` command provides direct access to the Amazon Simple Storage Service (Amazon S3) APIs,  enabling operations that are not exposed in the high-level s3 commands ❗❗❗
+
+Example: Creating a Bucket
+
+To create a new bucket in S3, you can use the create-bucket command.
+```
+aws s3api create-bucket --bucket my-new-bucket --region us-west-2
+```
+
 ### 20. Assumig IAM Roles (CLI)
 [Methods to assume a role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage-assume.html)
 [How to assume IAM role from CLI](https://www.youtube.com/watch?v=xmBA6cxZyJU)
@@ -61,6 +71,11 @@ aws s3 ls
 2. add permissions to the role (can be done during the 1st step)
 3. create a user
 4. [Grant permissions to switch roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html). add an inline policy to the user or add user to a group that has the permission to assume a role
+
+Thus when we create a role we create 3 objects❗❗❗:
+- Role
+- Permissions that's a provided by the role
+- Policy that describes who can assume the role
 
 Policy example:
 ```
@@ -210,6 +225,70 @@ User data can be up to 16KB before it's encoded to base64. It's encoded by defau
 - Access Keys are long live credentials and we should avoid to use it.
 - An Access Key is associated with a user and use permissions assigned with the user
 - We can use a user access key within EC2 when we use CLI, but that's a bad practice and instead it's better to use IAM Role (with a Policy) that's assigned to the EC2 instance
+
+### 33 Amazon EC2 Auto Scaling
+
+[Auto Scaling Groups (ASG)](https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-groups.html)
+[What is EC2 Auto Scaling?](https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html)
+
+**Auto Scaling Group (ASG)** manages a fleet of EC2 instances, automatically launching or terminating instances based on defined policies, schedules, or health checks.
+
+- Works with EC2, ECS and EKS
+- Maintenan availability and scale capacity
+- Integrated with CloudWatch (monitoring), Elastic Load Balancing (ELB), Amazon VPC to deploy EC2s across different AZs
+- Auto Scaling Groups (ASG) replaces failed instances
+- Scaling policies defines how to respond to changes on demand
+- Supports auto scaling and scheduled scaling. 
+
+[Auto Scaling Lunch Templates](https://docs.aws.amazon.com/autoscaling/ec2/userguide/launch-templates.html) define EC2 configurations
+`Lunch Config` is replaced by `Lunch Templates` and has fewer settings
+
+**Types of Auto Scaling**
+
+Auto scaling dynamically adjusts resources to meet application demands, ensuring optimal performance and cost efficiency. Below are the primary types of auto scaling:
+
+-** Manual Auto Scaling** This involves manually adjusting the number of instances based on observed workload changes. While it provides control, it requires constant monitoring and is less effective during rapid demand fluctuations.
+
+- **Dynamic Auto Scaling** Dynamic scaling automatically adjusts resources in response to real-time metrics like CPU usage, memory, or network traffic. It ensures quick reactions to workload changes, making it ideal for unpredictable traffic patterns.
+
+- **Predictive Auto Scaling** Predictive scaling uses historical data and machine learning to forecast future demand and proactively adjust resources. This prevents performance issues during anticipated traffic spikes.
+
+-** Scheduled Auto Scaling** Scheduled scaling adjusts resources based on predefined schedules or patterns. For example, it can scale up during business hours and scale down during off-peak times, making it suitable for predictable workloads.
+
+- **Target Tracking Auto Scaling** This method maintains a specific target metric, such as keeping CPU usage at a defined percentage. It continuously monitors and adjusts resources to meet the target, ensuring consistent performance.
+
+- **Resource-Based Auto Scaling** Instead of scaling entire instances, this focuses on specific resources like databases or load balancers. It ensures that individual components meet demand without affecting the entire system.
+
+-** Horizontal vs. Vertical Scaling Horizontal scaling** (scaling out/in) adds or removes instances to handle demand, while vertical scaling (scaling up/down) increases or decreases the capacity of existing resources. Horizontal scaling is more common in cloud environments due to its flexibility and minimal downtime.
+
+Each type of auto scaling serves specific use cases, allowing organizations to optimize performance, reliability, and cost in their cloud infrastructure.
+
+
+### 34. Create an Auto Scaling Group (ASG)
+[Tutorial: Create your first Auto Scaling group](https://docs.aws.amazon.com/autoscaling/ec2/userguide/create-your-first-auto-scaling-group.html)
+
+[EC2 start script](https://github.com/nealdct/aws-dva-code/blob/main/amazon-ec2/user-data-web-server.sh)
+
+### 35. Amazon Elastic Load Balancing (ELB)
+[Elastic Load Balancing](https://aws.amazon.com/elasticloadbalancing/)
+[What is an Application Load Balancer?](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html)
+
+Provides high availability and fault tolerance
+
+Targets:
+- ec2 instances
+- ECS containers
+- lambdas
+- IP addresses
+- other load balancers
+
+Elastic Load Balancing supports the following load balancers ([source doc](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html)): 
+- Application Load Balancers (HTTP(S))
+- Network Load Balancers (TCP, UDP, TLS, etc). Can have Static and Elastic IP in each AZ
+- Gateway Load Balancers,
+- Classic Load Balancers.
+
+You can select the type of load balancer that best suits your needs. This guide discusses Application Load Balancers. For more information about the other load balancers, see the User Guide for Network Load Balancers, the User Guide for Gateway Load Balancers, and the User Guide for Classic Load Balancers.
 
 
 ## 9 AWS IAM
@@ -409,7 +488,7 @@ Destinations:
 [Granting permissions to publish event notification messages to a destination](https://docs.aws.amazon.com/AmazonS3/latest/userguide/grant-destinations-permissions-to-s3.html)
 
 
-## 52. S2 Presigned URLs
+## 52. S3 Presigned URLs
 
 [Sharing objects with presigned URLs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html)
 
