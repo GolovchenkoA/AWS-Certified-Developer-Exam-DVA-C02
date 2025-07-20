@@ -386,6 +386,9 @@ And when new EC2 instances are created you can see those events in the Auto Scal
 [Full Example](https://github.com/nealdct/aws-dva-code/blob/main/amazon-ec2/create-asg-alb-cli.md)
 [create-auto-scaling-group docs](https://awscli.amazonaws.com/v2/documentation/api/2.1.29/reference/autoscaling/create-auto-scaling-group.html)
 
+### 39. Exam Questions Overview
+See the slides
+
 ⚠️ ⚠️ ⚠️ Do not foreget to remove the created resources
 
 ## 9 AWS IAM
