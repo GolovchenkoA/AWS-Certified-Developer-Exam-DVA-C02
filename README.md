@@ -786,9 +786,37 @@ Long polling - has lower costs. Because in AWS SQS we pay for requests. Thus if 
 Short polling - returns immediately even if the queue is empty
 
 
+## Section 6. Infrastructure as Code and PaaS. IaC
+[CloudFormation template snippets (examples) ](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-snippets.html)
+
+
+### 62. Infrastructure as Code with AWS CloudFromation
+
+Components:
+- [Templates](https://aws.amazon.com/cloudformation/resources/templates/)
+- [Stack](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-cloudformation-stack.html) - It's a deployed environment
+- [StackSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-cloudformation-stackset.html) - extends Stack and deploy an environment across multiple regions and accounts
+- Change Sets -Updates a stack. Also provides a summary of proposed changes. Useful to see what will be changed
+
+### 63. Creating and updating Stacks
+[CloudFormation template example. EC2 instance with SSH rule]([https://github.com/nealdct/aws-dva-code/tree/main/aws-cloudformation](https://github.com/nealdct/aws-dva-code/blob/main/aws-cloudformation/3-ec2-template.yml))
+
+### 64. Creating nested Stacks using the AWS CLI
+[CloudFormation nested stack example. Manual](https://github.com/nealdct/aws-dva-code/blob/main/aws-cloudformation/Create%20Nested%20Stack%20using%20the%20AWS%20CLI.md)
+
+### 65. CloudFormation template Deep Dive
+[Intristic function](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/intrinsic-function-reference.html)
+[Condition functions](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/intrinsic-function-reference-conditions.html)
+
+### 66. Complex VPC Stack
+[Example](https://github.com/nealdct/aws-dva-code/blob/main/aws-cloudformation/create-vpc-with-cloudformation.yaml)
+
+
 ## Section 10. Containers on Amazon ECS\EKS
 
-## 133. Amazon Elastic Containers Service (ECS)
+### 133. Amazon Elastic Containers Service (ECS)
+
+
 
 
 
