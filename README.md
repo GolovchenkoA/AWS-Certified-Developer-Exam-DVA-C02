@@ -787,6 +787,8 @@ Short polling - returns immediately even if the queue is empty
 
 
 ## Section 6. Infrastructure as Code and PaaS. IaC
+**See the slides with detailed descriptions!!**
+
 [CloudFormation template snippets (examples) ](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-snippets.html)
 
 
@@ -795,11 +797,13 @@ Short polling - returns immediately even if the queue is empty
 Components:
 - [Templates](https://aws.amazon.com/cloudformation/resources/templates/)
 - [Stack](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-cloudformation-stack.html) - It's a deployed environment
-- [StackSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-cloudformation-stackset.html) - extends Stack and deploy an environment across multiple regions and accounts
+- [StackSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-cloudformation-stackset.html) - extends Stack and deploy an environment across multiple regions and accounts within a single operation
 - Change Sets -Updates a stack. Also provides a summary of proposed changes. Useful to see what will be changed
 
 ### 63. Creating and updating Stacks
 [CloudFormation template example. EC2 instance with SSH rule]([https://github.com/nealdct/aws-dva-code/tree/main/aws-cloudformation](https://github.com/nealdct/aws-dva-code/blob/main/aws-cloudformation/3-ec2-template.yml))
+
+[CloudFormation template Mappings syntax](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/mappings-section-structure.html) The optional Mappings section helps you create key-value pairs that can be used to specify values based on certain conditions or dependencies. One common use case for the Mappings section is to set values based on the AWS Region where the stack is deployed. This can be achieved by using the AWS::Region pseudo parameter. The AWS::Region pseudo parameter is a value that CloudFormation resolves to the region where the stack is created. Pseudo parameters are resolved by CloudFormation when you create the stack.
 
 ### 64. Creating nested Stacks using the AWS CLI
 [CloudFormation nested stack example. Manual](https://github.com/nealdct/aws-dva-code/blob/main/aws-cloudformation/Create%20Nested%20Stack%20using%20the%20AWS%20CLI.md)
@@ -810,6 +814,72 @@ Components:
 
 ### 66. Complex VPC Stack
 [Example](https://github.com/nealdct/aws-dva-code/blob/main/aws-cloudformation/create-vpc-with-cloudformation.yaml)
+
+### 68. Advanced configuration and SSL/TLS
+[Elastic Beanstalk. Advanced environment customization with configuration files (.ebextensions)](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ebextensions.html).
+
+[QuickStart: Deploy a Java application to Elastic Beanstalk](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-quickstart.html)
+
+[AWS Elastic Beanstalk security](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/security.html)
+
+[Configuring a secure listener using a configuration file](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/configuring-https-elb.html#configuring-https-elb.configurationfile)
+
+⚠️ **See the slides for more detailed security information!!**
+
+[General options](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/command-options-general.html) see SSLCertificateArns
+
+
+[Beanstalk deployment strategies](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html)
+
+**Supported deployment policies:**
+
+| Method                          | Impact of failed deployment                                           | Deploy time                       | Zero downtime | No DNS change | Rollback process                    | Code deployed to          |
+|--------------------------------|------------------------------------------------------------------------|------------------------------------|----------------|----------------|-------------------------------------|----------------------------|
+| All at once                    | Downtime                                                               | 🕒                                 | No             | Yes            | Manual redeploy                     | Existing instances         |
+| Rolling                        | Single batch out of service; successful batches running new version   | 🕒🕒†                              | Yes            | Yes            | Manual redeploy                     | Existing instances         |
+| Rolling with an additional batch | Minimal if first batch fails; otherwise, similar to Rolling           | 🕒🕒🕒†                            | Yes            | Yes            | Manual redeploy                     | New and existing instances |
+| Immutable                      | Minimal                                                                | 🕒🕒🕒🕒                          | Yes            | Yes            | Terminate new instances             | New instances              |
+| Traffic splitting              | Percentage of traffic temporarily impacted                            | 🕒🕒🕒🕒††                        | Yes            | Yes            | Reroute traffic and terminate       | New instances              |
+| Blue/green                     | Minimal                                                                | 🕒🕒🕒🕒                          | Yes            | No             | Swap URL                            | New instances              |
+
+
+## Section 7. AWS Lambda and SAM (AWS Serverless Application Model)
+[AWS Serverless Application Model](https://aws.amazon.com/serverless/sam/)
+
+### 72. Serverless Services and Event-Driven Architecture
+
+[Git. Lambda examples](https://github.com/nealdct/aws-dva-code/tree/main/aws-lambda)
+[Git. Trigger lambda from the CLI](https://github.com/nealdct/aws-dva-code/blob/main/aws-lambda/invoking-functions.md)
+
+[Serverless Computing - AWS Lambda](https://aws.amazon.com/pm/lambda/#Learn-more-about-building-with-AWS-Lambda)
+
+[Introduction to AWS Lambda & Serverless Applications](https://youtu.be/EBSdyoO3goc)
+
+[CloudFormation lambda template](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-lambda.html)
+
+[Lambda quotas](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html)
+
+[Understanding Lambda function scaling](https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html)
+
+
+After you deploy your Lambda function, you can invoke it in several ways [Understanding Lambda function invocation methods](https://docs.aws.amazon.com/lambda/latest/dg/lambda-invocation.html):
+- The Lambda console – Use the Lambda console to quickly create a test event to invoke your function.
+- The AWS SDK – Use the AWS SDK to programmatically invoke your function.
+- The Invoke API – Use the Lambda Invoke API to directly invoke your function.
+- The AWS Command Line Interface (AWS CLI) – Use the aws lambda invoke AWS CLI command to directly invoke your function from the command line.
+- A function URL HTTP(S) endpoint – Use function URLs to create a dedicated HTTP(S) endpoint that you can use to invoke your function.
+- or [AWS Toolkit](https://aws.amazon.com/intellij/) (in this case it's for Intellij Idea)
+
+
+[Create your first Lambda function](https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html). Also aws services provide documentation for its "aws lambda blueprints (examples)"
+
+
+### 76. Create Event Source Mapping
+[Git example. Lambad & SQS. Event Source Mapping](https://github.com/nealdct/aws-dva-code/blob/main/aws-lambda/event-source-mapping.md)
+
+### 77. Lambda Versions and Aliases
+[Versioning](https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html) - you can have multiple versions for a lambda function
+[Create an alias for Lambda function](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html)
 
 
 ## Section 10. Containers on Amazon ECS\EKS
