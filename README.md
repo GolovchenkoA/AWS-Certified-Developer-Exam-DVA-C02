@@ -879,7 +879,59 @@ After you deploy your Lambda function, you can invoke it in several ways [Unders
 
 ### 77. Lambda Versions and Aliases
 [Versioning](https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html) - you can have multiple versions for a lambda function
+
 [Create an alias for Lambda function](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html)
+
+- Every lambda version has its own ARN
+- if we do not set a version (suffix) for a lambda it implicitly uses `$LATEST`
+- An alias can be created for a lambda with a version. For $LATEST an alias cannot be created
+- An alias can point to two versions at the same time and distribute traffic (for example 20%/80%)
+- Aliases implement blue\green deployment using wighted traffic distribution (see [Implement Lambda canary deployments using a weighted alias](https://docs.aws.amazon.com/lambda/latest/dg/configuring-alias-routing.html))
+
+### 78. Using Versions and Aliases
+[Implement Lambda canary deployments using a weighted alias](https://docs.aws.amazon.com/lambda/latest/dg/configuring-alias-routing.html))
+
+### 79. Deployment Packages and and Environment Variables
+Lamda supports 2 types of deployment packages:
+
+- [.zip file archives](https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-zip.html) (limit 50 MB for zipped file and 250 MB for unzipped, 3 MB for console aditor)
+- [Container Images](https://docs.aws.amazon.com/lambda/latest/dg/images-create.html)
+
+
+To keep your deployment package size small, package your function's `dependencies in layers`. Layers enable you to manage your dependencies independently, can be used by multiple functions, and can be shared with other accounts. For more information, see [Managing Lambda dependencies with layers](https://docs.aws.amazon.com/lambda/latest/dg/chapter-layers.html). See also: [Deploy Java Lambda functions with .zip or JAR file archives](https://docs.aws.amazon.com/lambda/latest/dg/java-package.html)
+
+
+A Lambda layer is a .zip file archive that contains supplementary code or data. Layers usually contain library dependencies, a custom runtime, or configuration files.
+
+There are multiple reasons why you might consider using layers:
+- To reduce the size of your deployment packages. Instead of including all of your function dependencies along with your function code in your deployment package, put them in a layer. This keeps deployment packages small and organized.
+- To separate core function logic from dependencies. With layers, you can update your function dependencies independent of your function code, and vice versa. This promotes separation of concerns and helps you focus on your function logic.
+- To share dependencies across multiple functions. After you create a layer, you can apply it to any number of functions in your account. Without layers, you need to include the same dependencies in each individual deployment package.
+- To use the Lambda console code editor. The code editor is a useful tool for testing minor function code updates quickly. However, you can’t use the editor if your deployment package size is too large. Using layers reduces your package size and can unlock usage of the code editor.
+- To lock an embedded SDK version.The embedded SDKs may change without notice as AWS releases new services and features. You can lock a version of the SDK by creating a Lambda layer with the specific version needed. The function then always uses the version in the layer, even if the version embedded in the service changes.
+
+
+
+**Lambda and CloudFormation**
+
+- zip-file should be stored in an S3 bucket.
+- The bucket should be at the same region where CloudFormation is run
+- CloudFormation template file should set `package type` to `Image` or `Zip`
+- A Lambda can have up to 5 layers
+- Layers are extracted to the /opt directory. Different languages look for depedencies in different locations under /opt
+
+
+**AWS CLI lambda update-function-configuration and get-function-configuration**
+
+[aws lambda update-function-configuration](https://docs.aws.amazon.com/cli/latest/reference/lambda/update-function-configuration.html)
+
+[aws lambda get-function-configuration](https://docs.aws.amazon.com/cli/latest/reference/lambda/get-function-configuration.html)
+
+[Working with lambda environment variables](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html)
+
+
+### 80. Using Environment Variables
+[Git. Lambda environment variables example](https://github.com/nealdct/aws-dva-code/blob/main/aws-lambda/lambda-environ-test.md)
 
 
 ## Section 10. Containers on Amazon ECS\EKS
