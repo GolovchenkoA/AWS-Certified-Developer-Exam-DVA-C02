@@ -846,6 +846,8 @@ Components:
 ## Section 7. AWS Lambda and SAM (AWS Serverless Application Model)
 [AWS Serverless Application Model](https://aws.amazon.com/serverless/sam/)
 
+[AWS Lambda Quotas. Developer Guide](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html)
+
 ### 72. Serverless Services and Event-Driven Architecture
 
 [Git. Lambda examples](https://github.com/nealdct/aws-dva-code/tree/main/aws-lambda)
@@ -932,6 +934,54 @@ There are multiple reasons why you might consider using layers:
 
 ### 80. Using Environment Variables
 [Git. Lambda environment variables example](https://github.com/nealdct/aws-dva-code/blob/main/aws-lambda/lambda-environ-test.md)
+
+[Encrypting environment variables](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars-encryption.html) Passwords, for example.
+
+
+### 81. Destinations and Dead-Letter Queues
+Destinations and settings for a Deal-Letter Queue are 2 different things that are configured in different places
+
+- [AWS Lambda Destinations](https://aws.amazon.com/blogs/compute/introducing-aws-lambda-destinations/)
+- [Adding a dead-letter queue](https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-retain-records.html#invocation-dlq)
+- [How Lambda handles errors and retries with asynchronous invocation](https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-error-handling.html)
+
+<img width="838" height="472" alt="image" src="https://github.com/user-attachments/assets/cacac1f9-79d8-4215-acb0-d8ad49d17a05" />
+
+
+Dead-Letter Queue (DLQ):
+
+- Is applied to asynchronous invocations
+- The DLQ can be SNS topic or SQS queue
+- We can specify numbers of re-tryes and amount of time before it's sent to a DQL
+
+
+### 83. Reserved and Provisioned Concurrency
+[Configuring Reserved Concurrency For A Function](https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html)
+
+In Lambda, concurrency is the number of in-flight requests that your function is currently handling. There are two types of concurrency controls available:
+
+- Reserved concurrency – This sets both the maximum and minimum number of concurrent instances allocated to your function. When a function has reserved concurrency, no other function can use that concurrency. Reserved concurrency is useful for ensuring that your most critical functions always have enough concurrency to handle incoming requests. Additionally, reserved concurrency can be used for limiting concurrency to prevent overwhelming downstream resources, like database connections. Reserved concurrency acts as both a lower and upper bound - it reserves the specified capacity exclusively for your function while also preventing it from scaling beyond that limit. Configuring reserved concurrency for a function incurs no additional charges.
+
+- Provisioned concurrency – This is the number of pre-initialized execution environments allocated to your function. These execution environments are ready to respond immediately to incoming function requests. Provisioned concurrency is useful for reducing cold start latencies for functions and designed to make functions available with double-digit millisecond response times. Generally, interactive workloads benefit the most from the feature. Those are applications with users initiating requests, such as web and mobile applications, and are the most sensitive to latency. Asynchronous workloads, such as data processing pipelines, are often less latency sensitive and so do not usually need provisioned concurrency. Configuring provisioned concurrency incurs additional charges to your AWS account.
+
+[CloudWatch metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/working_with_metrics.html)
+
+<img width="1151" height="364" alt="image" src="https://github.com/user-attachments/assets/b8e90682-90d3-4742-90ba-05e1b8c972d2" />
+
+
+Burst concurrency quotas depend on a region. Different regions support different quotas.
+
+If the concurrency limit is exceeded the client will get  HTTP 429 `TooManyRequestsException`
+
+
+
+[Service Quotas dashboard](https://console.aws.amazon.com/servicequotas/home) Requires to be logged in.
+
+- The default concurrency limit is 1000 invocations per/sec
+- The Default burst concurrency quota per Region is between 500 to 3000
+- There is not limit of concurrency. You need to ask AWS (at least 2 weeks ahead of time) to increase the quote.
+   
+
 
 
 ## Section 10. Containers on Amazon ECS\EKS
