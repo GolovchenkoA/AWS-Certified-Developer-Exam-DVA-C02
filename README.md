@@ -1045,7 +1045,10 @@ Summary or this chapter is available in the slides on Google Drive.
 
 - NoSQL DB
 - Fully-mnaged scalable DB with milliseconds latency
-- Key\value document DB
+- Key\value and document DB. Supports:
+   1. Scalars (string, number, boolean, etc)
+   2. Document Types (Json, List, Map)
+   3.  Set Types.
 - Transactions. eventually or strong consystency. Supports ACID transactions for strong consystency
 - DynamoDB Streams. Stores item-based modification up to 24 hours. Usually used by with Lambdas and Kinesis Client Library (KCL)
 - DAX DynamoDB Axelerator - DB cache. Supports latency for microseconds
@@ -1065,7 +1068,53 @@ You can use PartiQL - a SQL-compatible query language for Amazon DynamoDB, to pe
 
 PartiQL - A SQL-compatible query language:
 - `ExecuteStatement` – Reads multiple items from a table. You can also write or update a single item from a table. When writing or updating a single item, you must specify the primary key attributes.
-- `BatchExecuteStatement` – Writes, updates or reads multiple items from a table. This is more efficient than ExecuteStatement because your application only needs a single network round trip to write or read the items.
+- `BatchExecuteStatement` – Writes, updates or reads multiple items from a table. ⚠️ This is more efficient than ExecuteStatement because your application only needs a single network round trip to write or read the items.
+
+
+**[DynamoDB Table Classes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.TableClasses.html):**
+DynamoDB offers two table classes designed to help you optimize for cost. 
+- The DynamoDB Standard table class is the default, and is recommended for the vast majority of workloads.
+- The DynamoDB Standard-Infrequent Access (DynamoDB Standard-IA) table class is optimized for tables where storage is the dominant cost. For example tables that store infrequently accessed data, such as:
+  1. application logs
+  2.  old social media posts
+  3.   e-commerce order history, and past gaming achievements
+
+ are good candidates for the Standard-IA table class. See Amazon DynamoDB Pricing for pricing details.
+
+
+DynamoDB sypports IAM roles and [resource-based policies](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/access-control-resource-based.html). Policies can be applied to:
+- table
+- index
+- stream
+
+Max policy size per resource is 20 KB.
+
+
+### DynamoDB Partitions and Primary Keys
+There are 2 types of Primary Key:
+- partition keys - unique keys per table
+- composite keys - partitin key + sort key. 2 items may have the same partition key but they must have a different Sort key
+
+[Partitions and data distribution in DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.Partitions.html)
+
+
+[DynamoDB throughput capacity](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/capacity-mode.html).
+DynamoDB evenly distributes provisioned throughput among partitions:
+- `read capacity units` (RCUs) . Limit 3000
+-`wrtie capacity units` (WCUs) . Limit 1000
+
+⚠️ All itmes with the same Partition Key are stored togeter. A Primary Key should be choosen wisely. If you choose a wrong partition key you might exceed a partition limit read\write because:
+- hot key. Frequent access to the same key
+- uneven distributed data
+- request rate greater then a provisioned throughput
+
+Best Practices:
+- use high cardinality primary key (user email, order id, session id, ...)
+- use composite attibutes to get a unique key: for example, customer id + product id + country code and order date as a Sort key.
+- use DAX
+- for write-heavy use cases use random numbers from a predetermined range (to distribute items evenly) and use it as a prefix. Example: Invoice123+343253463 whre 343253463 is a random number
+
+
 
 
 
