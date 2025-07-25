@@ -1144,15 +1144,96 @@ WCU
 
 
 
+### 98. DynamoDB Performance and Throttling
+
+- You might get `ProvisionedThroughputExceededException` if read/write request rate is too high. See: [Troubleshooting throttling issues for provisioned mode](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TroubleshootingThrottling-common-issues.html)
+- AWS SDKs for DynamoDB automatically retry requests that recieve  `ProvisionedThroughputExceededException`
+
+⚠️ For additinal information see the slides.
 
 
+### 99. DynamoDB Scans and Query API
+[Scan API](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html)
 
+[Query API](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html)
+
+[Git. Scan and Query examples](https://github.com/nealdct/aws-dva-code/blob/main/amazon-dynamodb/DynamoDB%20CLI%20Commands.sh)
+
+
+Compare Scan and Query API
+| Feature          | **Scan**                         | **Query**                      |
+| ---------------- | -------------------------------- | ------------------------------ |
+| Reads All Items? | Yes                              | No – only items with given key |
+| Requires Key?    | No                               | Yes – partition key required   |
+| Performance      | Poor on large tables             | High performance               |
+| Cost             | Higher (reads everything)        | Lower (targeted reads)         |
+| Use Case         | Full-table analysis or dev tools | Production lookups & filtering |
+
+
+### 100. DynamoDB LSI and GSI
+
+Local Secondary Index (LSI):
+- provides an alternative sort key to use for scans and queries
+- Up to 5 LSIs per table
+- Must be created at table creation time
+- cannot be added/midified/removed later
+- has the same partition key as the original table (different sort key)
+
+Global Secondary Index (GSI):
+- Used to speed up queries on non-key attributes
+- can be created at any time
+- can use a different partition key and a sort key
+- provides completle different view of data
+
+
+### 104. DynamoDB Optimistic Locking and Conditional Updates
+[Optimistic locking](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBMapper.OptimisticLocking.html)
+
+DynamoDB supports [TTL](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html)
+
+
+### 106. DynamoDB Streams
+[DynamoDB Streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/streamsmain.html)
+
+
+| Properties                    | Kinesis Data Streams for DynamoDB                                                                 | DynamoDB Streams                                                                                   |
+|------------------------------|----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
+| **Data retention**           | Up to 1 year.                                                                                      | 24 hours.                                                                                           |
+| **Kinesis Client Library (KCL) support** | Supports KCL versions 1.X, 2.X, and 3.X.                                                        | Supports KCL versions 1.X and 2.X.                                                                  |
+| **Number of consumers**      | Up to 5 simultaneous consumers per shard, or up to 20 with enhanced fan-out.                      | Up to 2 simultaneous consumers per shard.                                                           |
+| **Throughput quotas**        | Unlimited.                                                                                        | Subject to throughput quotas by DynamoDB table and AWS Region.                                     |
+| **Record delivery model**    | Pull model over HTTP using `GetRecords`, and push with enhanced fan-out using `SubscribeToShard`. | Pull model over HTTP using `GetRecords`.                                                           |
+| **Ordering of records**      | Timestamp attribute can be used to identify the actual order of changes.                          | Stream records appear in the same sequence as modifications to the item.                           |
+| **Duplicate records**        | Duplicate records might occasionally appear.                                                      | No duplicate records appear.                                                                       |
+| **Stream processing options**| AWS Lambda, Amazon Managed Service for Apache Flink, Kinesis Data Firehose, AWS Glue streaming ETL.| AWS Lambda or DynamoDB Streams Kinesis adapter.                                                    |
+| **Durability level**         | Availability zones to provide automatic failover without interruption.                            | Availability zones to provide automatic failover without interruption.                             |
+
+[Working with DynamoDB Streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
+
+You can also use the CreateTable or UpdateTable API operations to enable or modify a stream. The StreamSpecification parameter determines how the stream is configured:
+
+- StreamEnabled — Specifies whether a stream is enabled (true) or disabled (false) for the table.
+- StreamViewType — Specifies the information that will be written to the stream whenever data in the table is modified:
+- KEYS_ONLY — Only the key attributes of the modified item.
+- NEW_IMAGE — The entire item, as it appears after it was modified.
+- OLD_IMAGE — The entire item, as it appeared before it was modified.
+- NEW_AND_OLD_IMAGES — Both the new and the old images of the item.
+
+
+### 107. DynamoDB Accelerator (DAX)
+[DAX](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html)
+- It's a DynamoDB cache.
+- Improves reads throughput
+- from miliseconds to microseconds
+
+### 110. DynamoDB Examp Questions
 
 
 
 ## Section 10. Containers on Amazon ECS\EKS
 
 ### 133. Amazon Elastic Containers Service (ECS)
+
 
 
 
