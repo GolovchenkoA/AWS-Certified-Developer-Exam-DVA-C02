@@ -969,11 +969,13 @@ In Lambda, concurrency is the number of in-flight requests that your function is
 <img width="1151" height="364" alt="image" src="https://github.com/user-attachments/assets/b8e90682-90d3-4742-90ba-05e1b8c972d2" />
 
 
+[Working with Lambda function logs](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-logs.html) CloudWatch Logs, S3, Firehouse.
+
+[Visualize Lambda function invocations using AWS X-Ray](https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html)
+
 Burst concurrency quotas depend on a region. Different regions support different quotas.
 
 If the concurrency limit is exceeded the client will get  HTTP 429 `TooManyRequestsException`
-
-
 
 [Service Quotas dashboard](https://console.aws.amazon.com/servicequotas/home) Requires to be logged in.
 
@@ -981,6 +983,91 @@ If the concurrency limit is exceeded the client will get  HTTP 429 `TooManyReque
 - The Default burst concurrency quota per Region is between 500 to 3000
 - There is not limit of concurrency. You need to ask AWS (at least 2 weeks ahead of time) to increase the quote.
    
+
+### 85. Lambda in a VPC	 and ALB Targets
+
+[Enable internet access for VPC-connected Lambda functions](https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc-internet.html)
+
+[Process Application Load Balancer (ALB) requests with Lambda](https://docs.aws.amazon.com/lambda/latest/dg/services-alb.html)
+
+
+You can register your [Lambda functions as targets of an Application Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html) and configure a listener rule to forward requests to the target group for your Lambda function. When the load balancer forwards the request to a target group with a Lambda function as a target, it invokes your Lambda function and passes the content of the request to the Lambda function, in JSON format.
+
+Limits: 
+- The Lambda function and target group must be in the same account and in the same Region.
+- The maximum size of the request body that you can send to a Lambda function is 1 MB. For related size limits, see HTTP header limits.
+- The maximum size of the response JSON that the Lambda function can send is 1 MB.
+- WebSockets are not supported. Upgrade requests are rejected with an HTTP 400 code.
+- Local Zones are not supported.
+- Automatic Target Weights (ATW) is not supported.
+
+
+### 86. Security of Lambada Functions
+
+[Lambda code signing with AWS Signer](https://docs.aws.amazon.com/lambda/latest/dg/governance-code-signing.html)  
+AWS SIgner is a fully managed code-signing service that allows you to validate your code against a digital signature to confirm that code is unaltered and from a trusted publisher. AWS Signer can be used in conjunction with AWS Lambda to verify that functions and layers are unaltered prior to deployment into your AWS environments. This protects your organization from malicious actors who might have gained credentials to create new or update existing functions.
+
+
+### 87. AWS Lambda best practices
+### 88. AWS Serverless Application Model (SAM)
+
+AWS SAM templates are an extension of CloudFormation Templates
+
+[What is the AWS Serverless Application Model (AWS SAM)?](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html). AWS Serverless Application Model (AWS SAM) is an open-source framework for building serverless applications using infrastructure as code (IaC). With AWS SAM’s shorthand syntax, developers declare AWS CloudFormation resources and specialized serverless resources that are transformed to infrastructure during deployment. This framework includes two main components: the AWS SAM CLI and the AWS SAM project. The AWS SAM project is the application project directory that is created when you run sam init. The AWS SAM project includes files like the AWS SAM template, which includes the template specification (the shorthand syntax you use to declare resources).
+
+[Using AWS SAM with layers](https://docs.aws.amazon.com/lambda/latest/dg/layers-sam.html)
+[Tutorial: Deploy a Hello World application with AWS SAM](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html) and [Git example](https://github.com/nealdct/aws-dva-code/blob/main/aws-lambda/sam-cli-commands.md)
+
+```
+sam deploy --template-file /var/folders/45/5ct135bx3fn2551_ptl5g6_80000gr/T/tmpq3x9vh63 --stack-name <YOUR STACK NAME>
+```
+
+
+### 89. Run SAM App using CloudShell
+[Tutorial: Deploy a Hello World application with AWS SAM](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html) and [Git example](https://github.com/nealdct/aws-dva-code/blob/main/aws-lambda/sam-cli-commands.md)
+
+
+### 90. The Serverless Application Repository
+
+[What Is the AWS Serverless Application Repository?](https://docs.aws.amazon.com/serverlessrepo/latest/devguide/what-is-serverlessrepo.html)
+
+The AWS Serverless Application Repository makes it easy for developers and enterprises to quickly find, deploy, and publish serverless applications in the AWS Cloud.
+You can easily publish applications, sharing them publicly with the community at large, or privately within your team or across your organization. To publish a serverless application (or app), you can use the AWS Management Console, the AWS SAM command line interface (AWS SAM CLI), or AWS SDKs to upload your code. Along with your code, you upload a simple manifest file, also known as an AWS Serverless Application Model (AWS SAM) template. For more information about AWS SAM, see the AWS Serverless Application Model Developer Guide.
+
+
+### 91. Lambda Exam 
+Summary or this chapter is available in the slides on Google Drive.
+
+
+## Section 8. Amazon DynamoDB
+
+[What is DynamoDb?](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html). See what fetures are provided by the DB.
+
+- NoSQL DB
+- Fully-mnaged scalable DB with milliseconds latency
+- Key\value document DB
+- Transactions. eventually or strong consystency. Supports ACID transactions for strong consystency
+- DynamoDB Streams. Stores item-based modification up to 24 hours. Usually used by with Lambdas and Kinesis Client Library (KCL)
+- DAX DynamoDB Axelerator - DB cache. Supports latency for microseconds
+- DB Backup. Point-in-time recovery down to the second in last 35 days
+- GlobalTables (multi-regions support)
+
+
+### 93. DynamoDB API
+[DynamoDB API](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.API.html). For a full list of the API operations, see the Amazon DynamoDB API Reference.
+
+- Control plane
+- Data plane
+- DynamoDB Streams
+- Transactions
+
+You can use PartiQL - a SQL-compatible query language for Amazon DynamoDB, to perform these CRUD operations or you can use DynamoDB’s classic CRUD APIs that separates each operation into a distinct API call.
+
+PartiQL - A SQL-compatible query language:
+- `ExecuteStatement` – Reads multiple items from a table. You can also write or update a single item from a table. When writing or updating a single item, you must specify the primary key attributes.
+- `BatchExecuteStatement` – Writes, updates or reads multiple items from a table. This is more efficient than ExecuteStatement because your application only needs a single network round trip to write or read the items.
+
+
 
 
 
