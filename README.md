@@ -1116,6 +1116,8 @@ Best Practices:
 
 ### 95. Practice Creating DynamoDB Tables
 
+
+
 ### 96. DynamoDB Consystency Models and Transactions
 
 - Supports [strong consystency](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html) and eventually consystancy reads
@@ -1226,7 +1228,152 @@ You can also use the CreateTable or UpdateTable API operations to enable or modi
 - Improves reads throughput
 - from miliseconds to microseconds
 
+### 109. Enabling Global Table
+[How DynamoDB global tables work](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html)
+
+There are 2 table types:
+- tables (replicated within a region)
+- global tables (master-master table replicated between multiple regions)
+
+Global tables support:
+- multi-region strong consistancy
+- multi-region eventual consistancy
+
+
 ### 110. DynamoDB Examp Questions
+
+See the slides!!!!
+
+
+
+## Section 9. Application Integration and APIs
+
+### 112. Amazon Simple Queue Service (SQS)
+
+[What is Amazon Simple Queue Service?](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html)
+
+[Using JMS with Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-java-message-service-jms-client.html)
+
+### 113. Working with SQS Queries
+[Git SQS CLI queries examples](https://github.com/nealdct/aws-dva-code/blob/main/amazon-sqs/aws-sqs-cli-commands.md)
+
+### 114. Amazon SQS API and Client Library
+[Use ChangeMessageVisibility with an AWS SDK or CLI](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/example_sqs_ChangeMessageVisibility_section.html)
+
+
+
+- ChangeMessageVisibility: Default 30 sec. Min: 0 sec. Max: 12 hours!
+- GetQueueAttributes
+- SetQueueAttributes
+- [All other Actions for Amazon SQS using AWS SDKs](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/service_code_examples_actions.html)
+
+[Configuring visibility timeouts in Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/working-with-visibility-timeouts.html)
+
+**ReceiveMessage**
+
+[Receive Message and VisibilityTimeout](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html)
+
+- ReceiveMessage polls up to 10 messages at time
+- `WaitTimeSeconds` - enables long-poll support [Amazon SQS short and long polling](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html#sqs-long-polling)
+
+**SendMessage**
+
+[Send Message](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/example_sqs_SendMessage_section.html)
+
+[SendMessage API](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html) with request parameters: 
+- DelaySeconds
+- MessageDeduplicationId
+- MessageBody. The message to send. The minimum size is one character. The maximum size is 256 KiB.
+- and other ...
+
+
+⚠️ SQS Extended Library for Java supports:
+- specify if a message always should be stored in an S3 bucket or only messages that exceed 256 KiB
+- send a message that references a single message object stored in an S3 bucket
+- get a message stored in an S3 bucket
+- delete a message stored in an S3 bucket once it's processed
+
+
+[SQS delay queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-delay-queues.html)
+
+Delay queues let you postpone the delivery of new messages to consumers for a number of seconds, for example, when your consumer application needs additional time to process messages. If you create a delay queue, any messages that you send to the queue remain invisible to consumers for the duration of the delay period. The default (minimum) delay for a queue is 0 seconds. The maximum is 15 minutes. For information about configuring delay queues using the console see Configuring queue parameters using the Amazon SQS console.
+
+
+### 115. Amazon Simple Notifcication Sevice (SNS)
+Amazon Simple Notification Service (Amazon SNS) is a fully managed service that provides message delivery from publishers (producers) to subscribers (consumers). Publishers communicate asynchronously with subscribers by sending messages to a topic, which is a logical access point and communication channel.
+
+
+[Amazon Simple Notification Service Documentation](https://docs.aws.amazon.com/sns/)
+
+[SNS Developer Guide](https://docs.aws.amazon.com/sns/latest/dg/index.html)
+
+In SNS, publishers send messages to a topic, which acts as a communication channel. The topic acts as a logical access point, ensuring messages are delivered to multiple subscribers across different platforms.
+
+Subscribers to an SNS topic can receive messages through different endpoints, depending on their use case, such as:
+
+- Amazon SQS
+- Lambda
+- HTTP(S) endpoints
+- Email
+- Mobile push notifications
+- Mobile text messages (SMS)
+- Amazon Data Firehose
+- Service providers (For example, Datadog, MongoDB, Splunk)
+
+SNS supports both Application-to-Application (A2A) and Application-to-Person (A2P) messaging, giving flexibility to send messages between different applications or directly to mobile phones, email addresses, and more.
+
+
+[Amazon SNS API Reference](https://docs.aws.amazon.com/sns/latest/api/welcome.html)
+
+Amazon SNS is a web service that enables you to build distributed web-enabled applications. Applications can use Amazon SNS to easily push real-time notification messages to interested subscribers over multiple delivery protocols. For more information about this product see the Amazon SNS product page. For detailed information about Amazon SNS features and their associated API calls, see the Amazon SNS Developer Guide.
+
+For information on the permissions you need to use this API, see Identity and access management in Amazon SNS in the Amazon SNS Developer Guide.
+
+We also provide SDKs that enable you to access Amazon SNS from your preferred programming language. The SDKs contain functionality that automatically takes care of tasks such as: cryptographically signing your service requests, retrying requests, and handling error responses. For a list of available SDKs, go to Tools for Amazon Web Services.
+
+
+### 116. Simple Serverless Application
+Example how to setup SNS+SQS+Lambda
+
+### 117. Step Functions
+[AWS Step Functions Documentation](https://docs.aws.amazon.com/step-functions/)
+
+AWS Step Functions makes it easy to coordinate the components of distributed applications as a series of steps in a visual workflow. You can quickly build and run state machines to execute the steps of your application in a reliable and scalable fashion.
+
+
+[Amazon States Language](https://states-language.net/spec.html)
+
+This document describes a JSON-based language used to describe state machines declaratively. The state machines thus defined may be executed by software. In this document, the software is referred to as "the interpreter".
+
+Step Functions has ready to use State Machine template that can be choosen.
+
+
+### 119. Amazon EventBridge
+
+## Amazon EventBridge
+
+[Amazon EventBridge](https://aws.amazon.com/eventbridge/) is a serverless event bus service that makes it easy to connect applications using data from your own services, integrated SaaS applications, and AWS services. It enables you to build event-driven architectures by routing events based on patterns, transforming event data, and delivering events to targets like AWS Lambda, Step Functions, or Kinesis.
+
+- 📘 [Product page](https://aws.amazon.com/eventbridge/)
+- 📚 [Developer guide](https://docs.aws.amazon.com/eventbridge/latest/userguide/)
+- 📗 [API reference](https://docs.aws.amazon.com/eventbridge/latest/APIReference/)
+
+### 🔄 Sources and Target services:
+
+- **Event Sources**: AWS services (e.g., EC2, S3, Lambda), integrated SaaS applications (e.g., Zendesk, Auth0), and custom applications that publish events to a custom event bus.
+- **Event Targets**: AWS services like [AWS Lambda](https://aws.amazon.com/lambda/), [Step Functions](https://aws.amazon.com/step-functions/), [Amazon SNS](https://aws.amazon.com/sns/), [Amazon SQS](https://aws.amazon.com/sqs/), [Kinesis Data Streams](https://aws.amazon.com/kinesis/data-streams/), and more.
+
+You can define routing rules to filter, transform, and deliver events in near real time to multiple targets.
+
+EventBridge includes [two ways to process and deliver events](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html): event buses and pipes:
+- Event buses are routers that receive events and delivers them to zero or more targets. 
+- Pipes EventBridge Pipes is intended for point-to-point integrations; 
+- In addition, EventBridge provides EventBridge Scheduler, a serverless scheduler that allows you to create, run, and manage tasks from one central, managed service.
+
+
+
+
+
 
 
 
