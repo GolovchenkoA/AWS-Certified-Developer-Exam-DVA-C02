@@ -1114,6 +1114,36 @@ Best Practices:
 - use DAX
 - for write-heavy use cases use random numbers from a predetermined range (to distribute items evenly) and use it as a prefix. Example: Invoice123+343253463 whre 343253463 is a random number
 
+### 95. Practice Creating DynamoDB Tables
+
+### 96. DynamoDB Consystency Models and Transactions
+
+- Supports [strong consystency](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html) and eventually consystancy reads
+- For strong consystency DB may return HTTP 500 in case of network outage or latency
+- strong consystency takes more throughput then eventually consystency
+- strong consystency has higher latency
+
+
+[Amazon DynamoDB Transactions: How it works](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/transaction-apis.html)
+
+- Transactions provide all-or-nothing chages to multiple items both within and across tables 
+- There are 2 reads or 2 writes when we use transactions. 1 for prepear a transaction and the 2nd one to commit the transaction.
+
+
+### 97. DynamoDB Capacity Units (RCU/WCU)
+RCU
+
+<img width="615" height="388" alt="image" src="https://github.com/user-attachments/assets/43c00918-bcbd-415e-a821-d03ec03f0039" />
+
+<img width="677" height="335" alt="image" src="https://github.com/user-attachments/assets/5ccc4497-a946-493b-b78b-89c2228a4274" />
+
+WCU
+
+<img width="629" height="341" alt="image" src="https://github.com/user-attachments/assets/5d719c6e-019c-4d75-ae54-b7d640731364" />
+<img width="682" height="324" alt="image" src="https://github.com/user-attachments/assets/aac8b2d8-9097-4aaf-a42e-fc801203ab11" />
+
+
+
 
 
 
