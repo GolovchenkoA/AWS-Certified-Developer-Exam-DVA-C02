@@ -1372,7 +1372,7 @@ EventBridge includes [two ways to process and deliver events](https://docs.aws.a
 
 
 
-
+### 120. Create EventBus and Rule
 
 
 
