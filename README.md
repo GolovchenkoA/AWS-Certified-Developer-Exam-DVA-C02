@@ -1380,6 +1380,78 @@ Chances are you won't want to process every single event that gets delivered to 
 
 To specify which events to send to a target, you create an [event pattern](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-patterns.html). An event pattern defines the data EventBridge uses to determine whether to send the event to the target. If the event pattern matches the event, EventBridge sends the event to the target. Event patterns have the same structure as the events they match. An event pattern either matches an event or it doesn't.
 
+### 121. Amazon API Gateway
+[Amazon API Gateway](https://aws.amazon.com/api-gateway/)
+[Amazon API Gateway Documentation](https://docs.aws.amazon.com/apigateway/)
+[What is Amazon Gateway API? Architecture and features of API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html)
+
+- REST API
+- HTTP API
+- WebSockets API
+
+Supports import:
+- OpenAPI
+- Swagger
+
+<img width="1012" height="575" alt="image" src="https://github.com/user-attachments/assets/f7bbadc8-3b40-4dad-809a-786872cdfc09" />
+
+
+[API endpoint types for REST APIs in API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-endpoint-types.html)
+
+- Edge-optimized API endpoints
+- Regional API endpoints
+- Private API endpoints
+
+
+### 122. Methods, Integrations, and Mapping Templates
+
+## Amazon API Gateway – REST API Integrations
+
+Amazon API Gateway REST APIs support several integration types that determine how your API methods interact with backend endpoints. You can choose the integration that best suits your use case, from simple HTTP backends to AWS services and mock responses.
+
+### 🔗 Supported Integration Types
+[Choose an API Gateway API integration type](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html)
+
+- **HTTP** - Forward requests to any HTTP/HTTPS endpoint.
+- **HTTP_PROXY** - Pass-through proxy to an HTTP/HTTPS backend with minimal transformation.
+- **AWS** – Invoke AWS service actions (e.g., DynamoDB, S3, Lambda) using service-specific integration.
+- **AWS_PROXY** – Pass-through to AWS Lambda using Lambda proxy integration.
+- **MOCK** – Return a static response configured in API Gateway without calling a backend.
+
+Each method in your REST API can use a different integration type, allowing flexibility in how requests are processed and routed.
+
+- 📘 [Learn more – API Gateway REST API Integration Types](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html)
+
+<img width="1028" height="517" alt="image" src="https://github.com/user-attachments/assets/26d5d7fc-57d7-4795-8db6-8a96f4110351" />
+
+
+[Mapping template transformations for REST APIs in API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/models-mappings.html)
+
+A mapping template transformation uses a mapping template to modify your integration request or integration response. A mapping template is a script expressed in [Velocity Template Language (VTL)](https://velocity.apache.org/engine/devel/vtl-reference.html) and applied to a payload using JSONPath  based on the Content-type header. You use mapping templates when you use mapping template transformations. This section describes conceptual information related to mapping templates.
+
+
+### 123. API Gateway Stages and Deployments
+
+In Amazon API Gateway, a **deployment** is a snapshot of your API configuration—including resources, methods, integrations, and settings—that you can publish to make your API callable. 
+
+A **stage** is a named reference to a deployment, allowing you to manage different environments (such as `dev`, `test`, or `prod`). You can configure settings per stage, including logging, throttling, and stage variables.
+
+This separation enables versioning, testing, and controlled rollout of your APIs across environments.
+
+- 📘 [Learn more – Deployments and Stages](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-deploy-api.html)
+
+**Stage variables** in Amazon API Gateway are key-value pairs associated with a specific stage of your API. They act like environment variables and can be used to:
+
+- Customize integration endpoints per stage (e.g., point to different backend URLs for `dev` and `prod`)
+- Pass configuration data to Lambda functions via mapping templates
+- Reuse a single API definition across multiple environments
+
+Stage variables can be referenced in integration URIs and mapping templates using the `${stageVariables.<variableName>}` syntax.
+
+- 📘 [Learn more – Stage Variables](https://docs.aws.amazon.com/apigateway/latest/developerguide/stage-variables.html)
+
+<img width="801" height="388" alt="image" src="https://github.com/user-attachments/assets/3560df55-6d04-4101-b21d-8e99254455c3" />
+
 
 
 
