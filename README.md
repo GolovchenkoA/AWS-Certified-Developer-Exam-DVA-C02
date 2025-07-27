@@ -1454,6 +1454,46 @@ Stage variables can be referenced in integration URIs and mapping templates usin
 
 
 
+### 124. Build an API with Lambda Proxy
+[Git examples](https://github.com/nealdct/aws-dva-code/tree/main/amazon-api-gateway)
+
+### 125. API Gateway Caching and Throttling
+[Cache settings for REST APIs in API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html)
+
+- The default TTL value for API caching is 300 seconds. The maximum TTL value is 3600 seconds.
+- cache capacity is between 0.5 GB to  237 GB
+- cache can be invalidate if it's required
+- clients can invalidate cache with the header: Cache-Control: max-age=0
+
+[Throttle requests to your REST APIs for better throughput in API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-request-throttling.html)
+
+You can configure throttling and quotas for your APIs to help protect them from being overwhelmed by too many requests. Both throttles and quotas are applied on a best-effort basis and should be thought of as targets rather than guaranteed request ceilings.
+
+When request submissions exceed the steady-state request rate and burst limits, API Gateway begins to throttle requests. Clients may receive 429 Too Many Requests error responses at this point. Upon catching such exceptions, the client can resubmit the failed requests in a way that is rate limiting.
+
+As an API developer, you can set the target limits for individual API stages or methods to improve overall performance across all APIs in your account. Alternatively, you can enable usage plans to set throttles on client request submissions based on specified requests rates and quotas.
+
+API Gateway applies your throttling-related settings in the following order:
+1. Per-client or per-method throttling limits that you set for an API stage in a usage plan
+2. Per-method throttling limits that you set for an API stage
+3. Account-level throttling per Region
+4. AWS Regional throttling
+
+
+### 127. API Gateway Usage Plans and API Keys
+[Usage plans and API keys for REST APIs in API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html)	
+
+**A usage plan** specifies who can access one or more deployed API stages and methods—and optionally sets the target request rate to start throttling requests. The plan uses API keys to identify API clients and who can access the associated API stages for each key.
+
+**API keys** are alphanumeric string values that you distribute to application developer customers to grant access to your API. You can use API keys together with Lambda authorizers, IAM roles, or Amazon Cognito to control access to your APIs. API Gateway can generate API keys on your behalf, or you can import them from a CSV file. You can generate an API key in API Gateway, or import it into API Gateway from an external source. For more information, see Set up API keys for REST APIs in API Gateway.
+
+### 129. Microservies with API, Lambda, and DynamoDB
+[Microservies with API, Lambda, and DynamoDB. Git example](https://github.com/nealdct/aws-dva-code/blob/main/amazon-api-gateway/api-lambda-dynamodb-hol.md)
+
+
+
+
+
 
 ## Section 10. Containers on Amazon ECS\EKS
 
