@@ -1596,6 +1596,168 @@ Docs: [Use resource policies to control access](https://docs.aws.amazon.com/apig
 
 ### 133. Amazon Elastic Containers Service (ECS)
 
+🧩 Core Components of Amazon ECS
+1. Clusters
+[Amazon ECS Clusters](https://docs.aws.amazon.com/AmazonECS/latest/userguide/clusters.html) A cluster is a logical grouping of tasks or services. You can run ECS clusters using either EC2 or AWS Fargate as the compute backend.
+
+2. Task Definitions
+[Amazon ECS Task Definitions](https://docs.aws.amazon.com/AmazonECS/latest/userguide/task_definitions.html) A task definition is a blueprint that describes one or more containers (e.g., image, CPU, memory, ports, environment variables). You register task definitions and use them to run tasks or services.
+
+3. Tasks
+[Amazon ECS Tasks](https://docs.aws.amazon.com/AmazonECS/latest/userguide/ecs-using-tasks.html) A task is a running instance of a task definition. Tasks can be run manually or as part of a service.
+
+4. Services
+[Amazon ECS Services](https://docs.aws.amazon.com/AmazonECS/latest/userguide/ecs_services.html) A service enables you to run and maintain a specified number of instances of a task definition simultaneously in a cluster. ECS services support integration with load balancers, autoscaling, and rolling updates.
+
+5. Launch Types
+You can run ECS workloads on different compute options:
+- [Fargate](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html) - Run containers without managing servers
+- [EC2](https://docs.aws.amazon.com/AmazonECS/latest/userguide/launch_types.html) -Run containers on a user-managed EC2 cluster
+
+
+6. Container Agent
+[Amazon ECS Container Agent](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent.html) The ECS container agent runs on EC2 instances and allows ECS to interact with the Docker daemon. With Fargate, the agent is managed for you.
+
+7. Amazon ECR (Elastic Container Registry)
+[Amazon ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html) Fully managed Docker container registry to store, manage, and deploy container images.
+
+8. Service Discovery
+[Service Discovery in ECS](https://docs.aws.amazon.com/AmazonECS/latest/userguide/service-discovery.html) Use Cloud Map for DNS-based service discovery between ECS tasks, especially for microservices architectures.
+
+9. Auto Scaling
+[ECS Service Auto Scaling](https://docs.aws.amazon.com/AmazonECS/latest/userguide/service-auto-scaling.html) ECS integrates with Application Auto Scaling to adjust the number of tasks in a service or EC2 instances in a cluster.
+
+
+
+9. Security & IAM
+[Amazon ECS Security](https://docs.aws.amazon.com/AmazonECS/latest/userguide/security.html) Use IAM roles and policies to control access to ECS resources. ECS supports task roles, execution roles, and encrypted environment variables.
+
+
+
+
+🆚 ECS Launch Types: Fargate vs EC2
+
+| Feature                       | Fargate                                                                                           | EC2                                                                                    |
+| ----------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **Infrastructure Management** | Fully managed by AWS (serverless)                                                                 | You manage EC2 instances and capacity                                                  |
+| **Use Case**                  | Simple, serverless deployments with less operational overhead                                     | Fine-grained control over infrastructure, required for custom AMIs or GPUs             |
+| **Pricing**                   | Pay per vCPU and memory per second                                                                | Pay for EC2 instances, regardless of task usage                                        |
+| **Scaling**                   | Scales automatically with task demand                                                             | Requires manual instance management or autoscaling configuration                       |
+| **Startup Time**              | Fast startup times for containers                                                                 | Slower due to EC2 instance provisioning                                                |
+| **Operating System Access**   | No direct access (managed environment)                                                            | Full SSH access to EC2 instances                                                       |
+| **Custom AMIs**               | Not supported                                                                                     | Supported                                                                              |
+| **Persistent Storage**        | Supported via [EFS](https://docs.aws.amazon.com/AmazonECS/latest/userguide/efs-volumes.html)      | Supported via EBS or EFS                                                               |
+| **Networking**                | Each task has its own ENI (awsvpc mode only)                                                      | Supports multiple network modes (bridge, host, awsvpc)                                 |
+| **Resource Allocation**       | Must define exact CPU and memory per task                                                         | Shares EC2 resources; more flexibility for over-provisioning                           |
+| **Security**                  | Task IAM roles, encryption, and isolation at the task level                                       | EC2 instance roles, security groups, less granular isolation                           |
+| **Integration**               | Native with AWS services (CloudWatch, IAM, CloudFormation, etc.)                                  | Also integrates natively, but requires more configuration                              |
+| **Documentation**             | [AWS Fargate on ECS](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html) | [ECS on EC2](https://docs.aws.amazon.com/AmazonECS/latest/userguide/launch_types.html) |
+
+
+🌍 Amazon ECS Anywhere
+[Amazon ECS Anywhere](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-anywhere.html) extends the capabilities of Amazon ECS to run container workloads on customer-managed infrastructure, such as on-premises servers, edge devices, or virtual machines in other cloud environments — all while using the same ECS APIs, tools, and control plane.
+
+| Feature                   | ECS (Fargate/EC2 on AWS)                                                                                                                                                       | ECS Anywhere                                                                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| **Compute Location**      | AWS-managed infrastructure (Fargate or EC2)                                                                                                                                    | Customer-managed infrastructure (on-prem, edge, or other clouds)                         |
+| **Control Plane**         | AWS ECS (fully managed)                                                                                                                                                        | AWS ECS (fully managed)                                                                  |
+| **Data Plane**            | Runs in AWS                                                                                                                                                                    | Runs outside AWS                                                                         |
+| **Installation Required** | No installation needed (AWS manages it)                                                                                                                                        | You install the ECS agent + SSM agent on your own servers                                |
+| **IAM Integration**       | Native IAM roles, task roles                                                                                                                                                   | Requires IAM credentials on external instances                                           |
+| **Networking**            | Uses VPC networking in AWS                                                                                                                                                     | Uses your local network configuration                                                    |
+| **Task Definitions**      | Same ECS task definitions                                                                                                                                                      | Same ECS task definitions                                                                |
+| **Use Cases**             | Cloud-native container workloads, autoscaling apps                                                                                                                             | Edge computing, hybrid cloud, data residency, low-latency local processing               |
+| **Pricing**               | Based on AWS compute (Fargate/EC2 pricing)                                                                                                                                     | Pay only for ECS control plane usage + AWS Systems Manager usage                         |
+| **Supported OS**          | Amazon Linux, Bottlerocket, etc.                                                                                                                                               | Amazon Linux 2, Ubuntu 20.04, CentOS 7, RHEL 7+ (with ECS agent + SSM agent)             |
+| **Docs**                  | [ECS on EC2](https://docs.aws.amazon.com/AmazonECS/latest/userguide/launch_types.html), [Fargate](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html) | [ECS Anywhere](https://docs.aws.amazon.com/AmazonECS/latest/userguide/ecs-anywhere.html) |
+
+
+
+### 135. Amazon ECS and IAM Roles
+
+<img width="1013" height="575" alt="image" src="https://github.com/user-attachments/assets/05568b38-6fab-4800-abf4-b656278abbf9" />
+
+<img width="1000" height="394" alt="image" src="https://github.com/user-attachments/assets/3627e5d1-dbce-4c4e-bc21-1235c92fa63d" />
+
+
+
+### 136. Task Placement Strategies
+
+[Use strategies to define Amazon ECS task placement](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-strategies.html)
+
+For tasks that use the EC2 launch type, Amazon ECS must determine where to place the task based on the requirements specified in the task definition, such as CPU and memory. Similarly, when you scale down the task count, Amazon ECS must determine which tasks to terminate. You can apply task placement strategies and constraints to customize how Amazon ECS places and terminates tasks.
+
+<img width="1108" height="515" alt="image" src="https://github.com/user-attachments/assets/950245be-8f7c-4b4e-9c0b-e4ee98d75f49" />
+
+
+**[Cluster Query Language](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-query-language.html?utm_source=chatgpt.com)** Cluster queries are expressions that allow you to group objects. For example, you can group container instances by attributes such as Availability Zone, instance type, or custom metadata. For more information, see Amazon ECS container instance attributes.
+
+
+### 137. Scaling Amazon ECS
+[ECS Service Auto Scaling](https://docs.aws.amazon.com/AmazonECS/latest/userguide/service-auto-scaling.html)
+
+2 types of scaling:
+- Cluster auto scaling
+- Service auto scaling
+
+Amazon ECS Service Auto Scaling supports the following types of automatic scaling:
+- Use a target metric to scale Amazon ECS services — Increase or decrease the number of tasks that your service runs based on a target value for a specific metric. This is similar to the way that your thermostat maintains the temperature of your home. You select temperature and the thermostat does the rest.
+- Use predefined increments based on CloudWatch alarms to scale Amazon ECS services— Increase or decrease the number of tasks that your service runs based on a set of scaling adjustments, known as step adjustments, that vary based on the size of the alarm breach.
+- Use scheduled actions to scale Amazon ECS services—Increase or decrease the number of tasks that your service runs based on the date and time.
+- Use historical patterns to scale Amazon ECS services with predictive scaling—Increase or decrease the number of tasks that your service runs based on historical load data analytics to detect daily or weekly patterns in traffic flows.
+
+
+[ECS Capacity Provider](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-capacity-provider-console-v2.html)
+
+Auto Scaling Group can automaticall scale using:
+
+| Feature                                     | Description                                                                                                                                              | Docs                                                                                                                            |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **Managed Scaling**                         | ECS automatically adjusts the number of EC2 instances in your Auto Scaling group based on the **resource needs of running tasks**.                       | [Managed Scaling Docs](https://docs.aws.amazon.com/AmazonECS/latest/userguide/managed-scaling.html)                             |
+| **Managed Instance Termination Protection** | Prevents ECS from terminating EC2 instances that are running **essential tasks** when scaling in. Ensures tasks aren’t disrupted during scale-in events. | [Instance Termination Protection Docs](https://docs.aws.amazon.com/AmazonECS/latest/userguide/managed-instance-protection.html) |
+
+
+| Concept             | Managed Scaling                                 | Managed Instance Termination Protection           |
+| ------------------- | ----------------------------------------------- | ------------------------------------------------- |
+| **What it does**    | Adjusts EC2 instance count automatically        | Prevents task-bearing instances from being killed |
+| **When it's used**  | During scale-out/scale-in decisions             | During instance termination (scale-in only)       |
+| **Who controls it** | ECS (based on task demand)                      | ECS (with protection flags on tasks)              |
+| **Applies to**      | Auto Scaling Group managed by Capacity Provider | EC2 instances with running ECS tasks              |
+
+
+
+### 138. Amazon ECS with ALB
+
+<img width="1209" height="676" alt="image" src="https://github.com/user-attachments/assets/dce31821-adf1-4c38-a4eb-5aac6bdaaa72" />
+
+### 139. Create an ECS Cluster with EC2 Lunch Type
+
+Create a role with [AmazonEC2ContainerServiceforEC2Role](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AmazonEC2ContainerServiceforEC2Role.html) permissions
+
+[Amazon ECS container agent configuration](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-config.html)
+
+
+### 141. Amazon Elastic Container Registry (ECR)
+[Amazon Elastic Container Registry Documentation](https://docs.aws.amazon.com/ecr/)
+
+Amazon Elastic Container Registry (Amazon ECR) is a fully managed container registry offering high-performance hosting, so you can reliably deploy application images and artifacts anywhere.
+
+[Amazon Elastic Container Registry Identity-based policy examples](https://docs.aws.amazon.com/AmazonECR/latest/userguide/security_iam_id-based-policy-examples.html)
+
+
+### 142. AWS Fargate Blue-Green CI\CD Pipeline - Part1
+
+[Fargate CI\CD instructions. Step-by-step Github Manual](https://github.com/nealdct/aws-dva-code/blob/main/fargate-blue-green-ci-cd/fargate-ci-cd-instructions.md)
+
+Tasks we’ll perform:
+• Create an nginx container image using Docker and push toAmazon ECR
+• Create an ALB with multiple listeners for blue/green updates
+• Create an AWS Fargate cluster and service fronted by the ALB
+• Create a pipeline for pushing code updates via GitHub using CodePipeline and CodeDeploy
+• Implement a blue/green updates for the ECS application
+
+
+
 
 
 
