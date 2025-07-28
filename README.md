@@ -1758,8 +1758,52 @@ Tasks we’ll perform:
 
 
 
+### 145. Amazon Elastic Kubernetes Service (EKS)
+
+[Amazon Elastic Kubernetes Service Documentation](https://docs.aws.amazon.com/eks/) 
+Amazon Elastic Kubernetes Service (Amazon EKS) is a managed service that makes it easy for you to run Kubernetes on AWS without needing to install and operate your own Kubernetes clusters.
 
 
+[Amazon EKS Distro](https://aws.amazon.com/eks/eks-distro/) An open-source distribution of Kubernetes from AWS
+
+[Amazon EKS Anywhere](https://aws.amazon.com/eks/eks-anywhere/?nc2=type_a) Create and operate Kubernetes clusters on your own infrastructure
+
+Use cases
+- Deploy across hybrid environments
+- Deploy high-performing large language models (LLMs)
+- Maintain data sovereignty
+
+
+[EKS Use Cases](https://docs.aws.amazon.com/eks/latest/userguide/common-use-cases.html)
+
+Amazon EKS offers robust managed Kubernetes services on AWS, designed to optimize containerized applications. The following are a few of the most common use cases of Amazon EKS, helping you leverage its strengths for your specific needs.
+
+- Deploying high-availability applications
+- Building microservices architectures
+- Automating software release process
+- Running serverless applications
+- Executing machine learning workloads
+- Deploying consistently on premises and in the cloud
+- Running cost-effective batch processing and big data workloads
+- Securing application and ensuring compliance
+
+EKS supports
+- ALB, NLB, CLB
+- Horizontal and Vertical Scaling
+
+
+### 146. AWS Copilot
+
+[Deploy demo app using AWS Copilot. Step-by-step Github exmaple](https://github.com/nealdct/aws-dva-code/blob/main/aws-copilot/copilot-commands.md)	
+
+[AWS Copilot ](https://aws.github.io/copilot-cli/) is an open source command line interface that makes it easy for developers to build, release, and operate production ready containerized applications on AWS App Runner, Amazon ECS, and AWS Fargate.
+
+
+[AWS App Runner](https://aws.amazon.com/apprunner/) Deploy web applications and APIs at scale. AWS App Runner builds and deploys web applications automatically, load balances traffic with encryption, scales to meet your traffic needs, and allows for the configuration of how services are accessed and communicate with other AWS applications in a private Amazon VPC.
+
+
+### 147. ECS EKS Exam Questions
+See the slides.
 
 
 
