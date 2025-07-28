@@ -1488,10 +1488,107 @@ API Gateway applies your throttling-related settings in the following order:
 **API keys** are alphanumeric string values that you distribute to application developer customers to grant access to your API. You can use API keys together with Lambda authorizers, IAM roles, or Amazon Cognito to control access to your APIs. API Gateway can generate API keys on your behalf, or you can import them from a CSV file. You can generate an API key in API Gateway, or import it into API Gateway from an external source. For more information, see Set up API keys for REST APIs in API Gateway.
 
 ### 129. Microservies with API, Lambda, and DynamoDB
-[Microservies with API, Lambda, and DynamoDB. Git example](https://github.com/nealdct/aws-dva-code/blob/main/amazon-api-gateway/api-lambda-dynamodb-hol.md)
+[Step-by-step guide. Microservies with API, Lambda, and DynamoDB. Git example](https://github.com/nealdct/aws-dva-code/blob/main/amazon-api-gateway/api-lambda-dynamodb-hol.md)
 
 
+### 130. API Gateway Access Control
 
+AWS API Gateway offers multiple mechanisms to control access to your APIs, ensuring secure and authorized usage. Below are the primary methods for managing access:
+
+1. IAM Authorization
+Use AWS Identity and Access Management (IAM) to authorize requests from AWS services or users within your AWS account. This is ideal for internal services or trusted applications.
+
+Use Case: Internal service-to-service communication
+
+How: Clients sign requests using AWS Signature Version 4 (SigV4)
+
+Docs: [Controlling access to API Gateway using IAM permissions](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-control-access-to-api.html)
+
+
+2. IAM Tags for Attribute-Based Access Control (ABAC)
+IAM Tags enable attribute-based access control (ABAC), allowing you to manage permissions based on tags attached to IAM users, roles, or resources. This approach is flexible for scaling access control in dynamic environments.
+
+Use Case: Environments where users, roles, or APIs are dynamically created and managed (e.g., multi-tenant systems)
+
+How:
+
+Tag your IAM entities (e.g., roles, users) and API Gateway resources (e.g., restApi or stage)
+
+Create IAM policies that grant access only when tags match
+
+Example: Allow developers to access only APIs tagged with Project = Alpha
+
+Docs: 
+[Use IAM tags for ABAC in API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-with-iam.html)
+
+[ABAC using IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html)
+
+IAM Tags example:
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "apigateway:GET",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/Project": "Alpha"
+        }
+      }
+    }
+  ]
+}
+
+```
+
+
+3. Lambda Authorizer (formerly Custom Authorizer)
+A Lambda function evaluates incoming requests and returns an IAM policy (Allow/Deny). Useful for implementing custom authentication logic (e.g., API keys, tokens, OAuth).
+
+There are two types of Lambda authorizers:
+
+- Request parameter-based Lambda authorizer (REQUEST authorizer)
+- Token-based Lambda authorizer (TOKEN authorizer)
+
+Use Case: Custom authentication (e.g., JWT, third-party identity providers)
+
+How: Pass headers, query strings, or context to a Lambda function for verification
+
+Docs: [Use Lambda authorizers with a REST API](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
+
+4. Amazon Cognito User Pools
+Integrate with Amazon Cognito to add user sign-up, sign-in, and identity management to your API. API Gateway verifies tokens issued by Cognito.
+
+Use Case: User authentication for web/mobile apps
+
+How: Use OAuth 2.0 access tokens or ID tokens in Authorization headers
+
+Docs: [Using Amazon Cognito user pools for authorization](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html)
+
+5. API Keys
+Simple static keys to identify callers. API keys are not secure on their own and are best combined with other methods. You can throttle or meter requests based on keys.
+
+Use Case: Rate limiting or monetizing APIs
+
+How: [Require API keys for method access; assign keys to usage plans](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-key-source.html)
+
+Docs: Use API keys in API Gateway
+
+6. Resource Policies
+Attach resource policies directly to your API to allow or deny access based on source IPs, VPCs, AWS accounts, or AWS organizations.
+
+Use Case: Restricting access by network or account
+
+How: Define JSON policy statements at the API level
+
+Docs: [Use resource policies to control access](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies.html)
+
+✅ Best Practices
+- Combine multiple methods for layered security (e.g., IAM + API Key + Lambda authorizer)
+- Use HTTPS endpoints to encrypt data in transit
+- Apply throttling and quota limits to prevent abuse
 
 
 
