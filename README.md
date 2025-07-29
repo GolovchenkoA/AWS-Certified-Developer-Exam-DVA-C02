@@ -1627,12 +1627,8 @@ You can run ECS workloads on different compute options:
 9. Auto Scaling
 [ECS Service Auto Scaling](https://docs.aws.amazon.com/AmazonECS/latest/userguide/service-auto-scaling.html) ECS integrates with Application Auto Scaling to adjust the number of tasks in a service or EC2 instances in a cluster.
 
-
-
-9. Security & IAM
+10. Security & IAM
 [Amazon ECS Security](https://docs.aws.amazon.com/AmazonECS/latest/userguide/security.html) Use IAM roles and policies to control access to ECS resources. ECS supports task roles, execution roles, and encrypted environment variables.
-
-
 
 
 🆚 ECS Launch Types: Fargate vs EC2
@@ -1807,7 +1803,7 @@ See the slides.
 
 
 
-## 11. CI\CD Tools
+## Section 11. CI\CD Tools
 
 [Manual Part1 -Part5](https://github.com/nealdct/aws-dva-code/blob/main/fargate-blue-green-ci-cd/fargate-ci-cd-instructions.md)
 
@@ -1924,6 +1920,10 @@ aws ecr get-login-password --region us-east-1 | docker login --username AWS --pa
 docker push <ACCOUNT-ID>.dkr.ecr.us-east-1.amazonaws.com/nginx:latest
 ```
 
+
+### 157.  AWS Fargate Blue-Green CI\CD Pipeline - Part 4
+
+
 ## 158. AWS Apmlify and AppSync
 [AWS Amplify](https://aws.amazon.com/amplify/) Fully managed service to build full-stack applications.
 
@@ -1932,3 +1932,219 @@ AWS Amplify is a comprehensive development platform from Amazon Web Services (AW
 [AWS AppSync](https://aws.amazon.com/appsync/) AWS AppSync is a service that lets you create and manage GraphQL APIs for web and mobile apps. It offers features such as data caching, API federation, real-time events, custom domains...
 
 
+## Section 12. Databases and Analytics
+[Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html) is a fully managed service for setting up, operating, and scaling relational databases in the cloud. It automates common tasks such as provisioning, patching, backup, recovery, and replication.
+
+
+✅ Amazon RDS supports the following engines:
+- Amazon Aurora (MySQL/PostgreSQL-compatible)
+- MySQL
+- PostgreSQL
+- MariaDB
+- Oracle
+- SQL Server
+
+
+🛠️ Key Features
+
+📘 [Amazon RDS Features](https://aws.amazon.com/rds/features/)
+
+- Automated Backups and Point-in-Time Recovery
+- Multi-AZ Deployments for high availability
+- Read Replicas for read scaling (MySQL, PostgreSQL, Aurora, MariaDB)
+- Automatic Software Patching & Upgrades
+- Encryption at Rest & in Transit (TLS/SSL, KMS)
+- Monitoring via Amazon CloudWatch
+- IAM Authentication for database access
+- Performance Insights for real-time analysis
+- Database Migration Support with DMS
+
+### 165. Amazon Aurora
+See the slides!!!!!
+
+[Replication with Amazon Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html):
+- Aurora Replicas
+- Replication with Aurora MySQL
+- Replication with Aurora PostgreSQL
+
+- Amazon Aurora is an AWS database offering in the RDS family
+-  Amazon Aurora is a MySQL and PostgreSQL-compatible relational database built for the cloud
+- Amazon Aurora is up to five times faster than standard MySQL databases and three times faster than standard PostgreSQL databases
+- Amazon Aurora features a distributed, fault-tolerant, self-healing storage system that auto-scales up to 128TB per database instance
+
+[Using Amazon Aurora Global Database](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html)
+
+With the Amazon Aurora Global Database feature, you set up multiple Aurora DB clusters that span multiple AWS Regions. Aurora automatically synchronizes all changes made in the primary DB cluster to one or more secondary clusters. An Aurora global database has a primary DB cluster in one Region, and up to 10 secondary DB clusters in different Regions. This multi-Region configuration provides fast recovery from the rare outage that might affect an entire AWS Region. Having a full copy of all your data in multiple geographic locations also enables low-latency read operations for applications that connect from widely separated locations around the world.
+
+
+[Using Amazon Aurora PostgreSQL Limitless Database](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/limitless.html) provides automated horizontal scaling to process millions of write transactions per second and manages petabytes of data while maintaining the simplicity of operating inside a single database. With Aurora PostgreSQL Limitless Database, you can focus on building high-scale applications without having to build and maintain complex solutions for scaling your data across multiple DB instances to support your workloads.
+
+
+### 165. Amazon RDS Security
+See the slides!!!
+
+[Encrypting Amazon Aurora resources](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Overview.Encryption.html)
+
+- Supports encryption at rest, but it can be only enabled when a DB instance is creating
+- encryption cannot be changed or disabled after a DB is created
+- DB Backup and replicas has the same encryption (or absence of encryption) as the original DB.  for example, you cannot, make a backup of unencrypted DB and restore an encrypted DB from the backup
+- But there is a way to make an unecnrypted snapshot of a DB and copy it to an encrypted snapshot and restore the DB from the encrypted snapshot. In this case it will be not the same DB, but a copy of the original DB
+
+### 166. Amazon ElastiCache
+
+[Amazon ElastiCache Documentation](https://docs.aws.amazon.com/elasticache/)
+
+Welcome to the Amazon ElastiCache User Guide. Amazon ElastiCache is a web service that makes it easy to set up, manage, and scale a distributed in-memory data store or cache environment in the cloud. It provides a high-performance, scalable, and cost-effective caching solution. At the same time, it helps remove the complexity associated with deploying and managing a distributed cache environment.
+
+You can operate Amazon ElastiCache in two formats. You can get started with a serverless cache or choose to design your own cache cluster.
+
+Amazon ElastiCache works with:
+- Valkey
+- Memcached
+- Redis OSS engines.
+
+If you're unsure which engine you want to use, see [Comparing Valkey, Memcached, and Redis OSS self-designed caches](https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SelectEngine.html) in this guide.
+
+
+### 171. Amazon MemoryDB for Redis
+
+The slides contain comparison of MemoryDB and ElastiCache
+
+[Amazon MemoryDB](https://aws.amazon.com/memorydb/)
+
+Use cases
+- Real-time generative AI applications
+- Build web and mobile applications
+- Develop online games
+- Stream media and entertainment
+
+
+### 172. Amazon Kinesis Core Knowledge
+[Amazon Kinesis](https://aws.amazon.com/kinesis/)
+
+Use cases
+- Create real-time applications
+- Evolve from batch to real-time analytics
+- Analyze IoT device data
+- Build video analytics applications
+
+<img width="1002" height="582" alt="image" src="https://github.com/user-attachments/assets/af6b6b4b-22b5-4d64-b74f-d79292740657" />
+
+
+
+[Amazon Kinesis Data Firehose](https://aws.amazon.com/firehose/)
+
+[Amazon Kinesis Data Firehouse Docs](https://docs.aws.amazon.com/firehose/)
+
+[Amazon Kinesis Data Firehouse supported surces and destinations](https://docs.aws.amazon.com/firehose/latest/dev/create-name.html)
+
+Amazon Data Firehose provides the easiest way to acquire, transform, and deliver data streams within seconds to data lakes, data warehouses, and analytics services. To use Amazon Data Firehose, you set up a stream with a source, destination, and required transformations. Amazon Data Firehose continuously processes the stream, automatically scales based on the amount of data available, and delivers it within seconds.
+
+[Analytics on AWS](https://aws.amazon.com/big-data/datalakes-and-analytics/)
+
+### 173. Amazon Kinesis Client Library (KCL)
+[Kinesis Client Library (KCL)](https://docs.aws.amazon.com/streams/latest/dev/kcl.html)
+
+Kinesis Client Library (KCL) is a standalone Java software library designed to simplify the process of consuming and processing data from Amazon Kinesis Data Streams. KCL handles many of the complex tasks associated with distributed computing, letting developers focus on implementing their business logic for processing data. It manages activities such as load balancing across multiple workers, responding to worker failures, checkpointing processed records, and responding to changes in the number of shards in the stream.
+
+
+- The Kinesis Client Library (KCL) helps you consume and process data from a Kinesis data stream
+- The KCL is different from the Kinesis Data Streams API that is available in the AWS SDKs
+	- The Kinesis Data Streams API helps you manage many aspects of Kinesis Data Streams (including creating streams, resharding, and putting and getting records)
+	- The KCL provides a layer of abstraction specifically for processing data in a consumer role
+
+### 174. Amazon OpenSearch Service
+Based on the popular open source ElasticSearch.
+
+[What is OpenSearch](https://aws.amazon.com/what-is/opensearch/)
+
+### 175. Amazon Athena and AWS Glue
+
+<img width="1018" height="576" alt="image" src="https://github.com/user-attachments/assets/1831b375-a7c2-42f9-b966-65ac41940709" />
+
+
+
+[Available data source connectors](https://docs.aws.amazon.com/athena/latest/ug/connectors-available.html) lists prebuilt Athena data source connectors that you can use to query a variety of data sources external to Amazon S3. To use a connector in your Athena queries, configure it and deploy it to your account. Athena uses Lambdas to make requests to the datasources (but not to S3)
+
+[AWS Glue](https://docs.aws.amazon.com/glue/) is a fully-managed, scalable, serverless data integration service that makes it easy to discover, prepare, and combine data for analytics, machine learning, and application development.
+
+### 176. Exam questions
+
+
+
+## Seection 13. Management and Security
+
+### 178. AWS AppConfig
+[AWS AppConfig Documentation](https://docs.aws.amazon.com/appconfig/)  Use AWS AppConfig to quickly deploy **application configurations** to applications of any size. AWS AppConfig supports controlled deployments and includes built-in validation checks and monitoring.
+
+
+### 179. Amazon CloudWatch Overview
+
+[Feature flags and supported configuration data stores](https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-configuration-profile.html)
+
+[non-native data sources](https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-configuration-profile-other-data-sources.html)
+
+CloudWatch Core Features:
+- CloudWatch Metrics – services send time-ordered data points to CloudWatch
+- CloudWatch Alarms – monitor metrics and initiate actions
+- CloudWatch Logs – centralized collection of system and application logs
+- CloudWatch Events – stream of system events describing changes to AWS resources and can trigger actions
+
+[CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Install-CloudWatch-Agent.html) is a software component that collects metrics, logs, and traces from your Amazon EC2 instances, on-premises servers, and containerized applications. It enables you to monitor your infrastructure and applications more comprehensively than the basic monitoring provided by default.
+
+Key benefits:
+- Collect system-level metrics (CPU, memory, disk, network)
+- Gather custom metrics from your applications
+- Collect and centralize logs from various sources
+- Monitor both AWS and on-premises environments with a single tool
+- Set up alarms and notifications based on collected data
+
+
+[Using Amazon CloudWatch alarms](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) You can create both `metric` and `composite` alarms in Amazon CloudWatch.
+
+### 180. Create a Custom Metric and Alarm
+[CloudWatch custom metrics. Github step-by-step mainual.](https://github.com/nealdct/aws-dva-code/blob/main/amazon-cloudwatch/custom-cloudwatch-metrics.md)
+
+
+
+### 183. Unified CloudWatch agent
+
+(Use the unified CloudWatch agent to get started with CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/UseCloudWatchUnifiedAgent.html)
+
+### 184. AWS CloudTrail
+[AWS CloudTrail Documentation](https://docs.aws.amazon.com/cloudtrail/)
+
+With AWS CloudTrail, you can monitor your AWS deployments in the cloud by getting a history of AWS API calls for your account, including API calls made by using the AWS Management Console, the AWS SDKs, the command line tools, and higher-level AWS services. You can also identify which users and accounts called AWS APIs for services that support CloudTrail, the source IP address from which the calls were made, and when the calls occurred. You can integrate CloudTrail into applications using the API, automate trail creation for your organization, check the status of your trails, and control how administrators turn CloudTrail logging on and off.
+
+
+[Understanding CloudTrail events](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-events.html)
+
+There are four types of CloudTrail events:
+- Management events
+- Data events
+- Network activity events
+- Insights events
+
+
+### 186 KMS
+[AWS Key Management Service Documentation](https://docs.aws.amazon.com/kms/) 
+AWS Key Management Service (AWS KMS) is an encryption and key management service scaled for the cloud. AWS KMS keys and functionality are used by other AWS services, and you can use them to protect data in your own applications that use AWS.
+
+[Data keys ](https://docs.aws.amazon.com/kms/latest/developerguide/data-keys.html) are symmetric keys you can use to encrypt data, **including large amounts of data** (> 4KB) and other data encryption keys. Unlike symmetric KMS keys, which can't be downloaded, data keys are returned to you for use outside of AWS KMS.
+
+
+### 188 AWS KMS API and CLI
+
+### 189 AWS Certificate Manager
+
+### 190 AWS System Manager
+
+### 191 AWS System Manager Parameter Store
+
+### 192. AWS Secrets Manager
+
+### 193. Working with Secrets
+
+### 194. Amazon Cognito
+
+### 195. Exam Questions
