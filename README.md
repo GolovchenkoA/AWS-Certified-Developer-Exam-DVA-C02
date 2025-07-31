@@ -1382,12 +1382,18 @@ To specify which events to send to a target, you create an [event pattern](https
 
 ### 121. Amazon API Gateway
 [Amazon API Gateway](https://aws.amazon.com/api-gateway/)
+
 [Amazon API Gateway Documentation](https://docs.aws.amazon.com/apigateway/)
+
 [What is Amazon Gateway API? Architecture and features of API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html)
+
 
 - REST API
 - HTTP API
 - WebSockets API
+
+[Choose between REST APIs and HTTP APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html)
+
 
 Supports import:
 - OpenAPI
