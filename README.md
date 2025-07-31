@@ -1463,6 +1463,8 @@ Stage variables can be referenced in integration URIs and mapping templates usin
 ### 124. Build an API with Lambda Proxy
 [Git examples](https://github.com/nealdct/aws-dva-code/tree/main/amazon-api-gateway)
 
+[Java sample applications for AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/java-samples.html)
+
 ### 125. API Gateway Caching and Throttling
 [Cache settings for REST APIs in API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html)
 
