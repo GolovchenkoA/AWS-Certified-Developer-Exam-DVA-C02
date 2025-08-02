@@ -848,6 +848,8 @@ Components:
 
 [AWS Lambda Quotas. Developer Guide](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html)
 
+[Lambda sample applications (including java)](https://docs.aws.amazon.com/lambda/latest/dg/lambda-samples.html)
+
 ### 72. Serverless Services and Event-Driven Architecture
 
 [Git. Lambda examples](https://github.com/nealdct/aws-dva-code/tree/main/aws-lambda)
