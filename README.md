@@ -850,6 +850,9 @@ Components:
 
 [Lambda sample applications (including java)](https://docs.aws.amazon.com/lambda/latest/dg/lambda-samples.html)
 
+[Official guide. aws-lambda-developer-guide with examples. Github](https://github.com/awsdocs/aws-lambda-developer-guide/tree/main)
+
+
 ### 72. Serverless Services and Event-Driven Architecture
 
 [Git. Lambda examples](https://github.com/nealdct/aws-dva-code/tree/main/aws-lambda)
