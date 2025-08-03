@@ -9,6 +9,8 @@
 
 [Course Downloads](https://digitalcloud.training/aws-certified-developer-course-downloads/)
 
+[AWS Tools](https://builder.aws.com/build/tools)
+
 
 👉 All additional files (including slides) are stored on Google Disc in the folder `Certification Courses\Kubernetes\AWS\DVA-CO2 AWS Certified Developer Exam\` and there is an email from ...@digitalcloud.training
 
